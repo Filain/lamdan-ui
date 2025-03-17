@@ -13,8 +13,11 @@ const eslintConfig = [
   ...compat.config({
     extends: ['next/core-web-vitals', 'next/typescript', 'prettier'],
     rules: {
-      "@typescript-eslint/no-empty-object-type": "off"
-
+      "@typescript-eslint/no-empty-object-type": "off",
+      semi: ["error"],
+      quotes: ["error", "double"],
+      "prefer-arrow-callback": ["error"],
+      "prefer-template": ["error"],
     }
   }),
 ]
