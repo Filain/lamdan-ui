@@ -12,7 +12,13 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.config({
     extends: ['next/core-web-vitals', 'next/typescript', 'prettier'],
+    plugins: ["simple-import-sort"],
     rules: {
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
+      "import/first": "error",
+      "import/newline-after-import": "error",
+      "import/no-duplicates": "error",
       "@typescript-eslint/no-empty-object-type": "off",
       semi: ["error"],
       quotes: ["error", "double"],

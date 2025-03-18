@@ -1,17 +1,17 @@
-// import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import type {Metadata} from "next";
+import type { Metadata } from "next";
+import { Montserrat } from "next/font/google";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-//
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+const montserratSans = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  style: ["normal"],
+  display: "swap",
+  variable: "--font-montserrat",
+});
+// оголошуються змінні для підключених шрифтів
+// <body className={`${montserratSans.variable} antialiased`}> Додає змінні шрифтів
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,11 +25,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${montserratSans.variable} antialiased`}>
+        {/*className={`${montserratSans.variable} Додає змінні шрифтів у клас body*/}
+        {/* antialiased покращує згладжування тексту*/}
         {children}
-
       </body>
     </html>
   );
