@@ -10,6 +10,12 @@
 
 @layer base {}
 
+@apply font-montserrat {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 @theme inline {
   /*--color-background: var(--background);*/
   /*--color-foreground: var(--foreground);*/
@@ -19,7 +25,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #1e1f22;
     --foreground: #ededed;
   }
 }

@@ -3,5 +3,5 @@ export default function LoginLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main className="border-2">{children}</main>;
+  return <main className="">{children}</main>;
 }

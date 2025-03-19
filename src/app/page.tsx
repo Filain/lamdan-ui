@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div>
-      <p className="font-sans">page</p>
+      <p className="">page</p>
     </div>
   );
 }
