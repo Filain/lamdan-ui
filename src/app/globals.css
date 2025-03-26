@@ -1,7 +1,7 @@
 @import "tailwindcss";
-@tailwind base;
-@tailwind components;
 @tailwind utilities;
+
+
 
 :root {
   --background: #ffffff;
@@ -29,6 +29,33 @@
     --foreground: #ededed;
   }
 }
+
+
+
+/* Скидаємо стандартне синє підсвічування */
+
+
+/* Вибрані опції в меню будуть мати зелений фон і білий текст */
+select option:checked {
+  background-color: #22c55e; /* Зелене підсвічування вибраної опції */
+  color: white ; /* Білий текст */
+}
+
+/* Зелений фон при наведенні мишкою */
+select option:hover {
+  background-color: #22c55e; /* Зелене підсвічування при наведенні */
+  color: white ; /* Білий текст при наведенні */
+}
+
+/* Видалення синьої підсвітки в деяких браузерах (Firefox, Safari) */
+
+
+/* Всі опції по замовчуванню мають зелений текст */
+select option {
+  color: #22c55e; /* Зелений текст у всіх опціях */
+  background-color: white; /* Білий фон */
+}
+
 
 
 body {

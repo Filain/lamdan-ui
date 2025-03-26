@@ -1,7 +1,11 @@
+"use client";
+
+import OrderFormComponent from "@/components/OrderFormComponent";
+
 export default function Main() {
   return (
-    <div>
-      <p className=" font-sans">Main</p>
-    </div>
+    <>
+      <OrderFormComponent />
+    </>
   );
 }
