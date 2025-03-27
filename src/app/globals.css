@@ -37,51 +37,39 @@
 }
 
 input, textarea, select {
-  background-color: var(--colour-grey); /* Сірий фон */
-  color: var(--text-color); /* Колір тексту (можна змінити на інший, якщо потрібно) */
+  background-color: var(--colour-grey);
+  color: var(--text-color);
   border: none;
-  padding: 0.5rem; /* Додаємо внутрішні відступи */
-  border-radius: 4px; /* Круглі кути */
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out;
 }
 
-/* Стилізуємо інпути при фокусі (коли на них натискають) */
 input:focus, textarea:focus, select:focus {
-  background-color: var(--color-gray-500); /* Зелене підсвічування фону при фокусі */
-  border: none; /* Зелена рамка при фокусі */
-  color: var(--text-color); /* Білий текст */
-  outline: none; /* Видаляємо стандартну підсвітку фокусу */
+  background-color: var(--color-gray-500);
+  border: none;
+  color: var(--text-color);
+  outline: none;
 }
 
-/* Стилізуємо плейсхолдери */
 input::placeholder, textarea::placeholder {
-  color: var(--color-gray-500); /* Колір тексту в плейсхолдері */
+  color: var(--color-gray-500);
 }
 
-
-
-
-/* Вибрані опції в меню будуть мати зелений фон і білий текст */
 select option:checked {
-  background-color: var(--color-gray-500); /* Зелене підсвічування вибраної опції */
-  color: var(--text-color) ; /* Білий текст */
+  background-color: var(--color-gray-500);
+  color: var(--text-color) ;
 }
 
-/* Зелений фон при наведенні мишкою */
 select option:hover {
-  background-color: var(--color-gray-500); /* Зелене підсвічування при наведенні */
-  color:  var(--text-color) ; /* Білий текст при наведенні */
+  background-color: var(--color-gray-500);
+  color:  var(--text-color) ;
 }
 
-/* Видалення синьої підсвітки в деяких браузерах (Firefox, Safari) */
-
-
-/* Всі опції по замовчуванню мають зелений текст */
 select option {
-  color: var(--color-gray-500); /* Зелений текст у всіх опціях */
-  background-color:  var(--background-color); /* Білий фон */
+  color: var(--color-gray-500);
+  background-color:  var(--background-color);
 }
-
-
 
 body {
   background: var(--background-color);
