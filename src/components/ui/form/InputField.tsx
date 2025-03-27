@@ -23,7 +23,7 @@ const InputField: FC<InputFieldProps<FieldValues>> = ({ label, name, type = "tex
     <div className="flex flex-col relative">
       <label className="mb-1 font-medium">{label}</label>
       {type === "select" && options ? (
-        <select {...register(name)} className="border p-2 rounded w-full">
+        <select {...register(name)} className="border p-2 rounded w-full h-10">
           {Object.entries(options).map(([value, display]) => (
             <option key={value} value={value}>
               {display}
@@ -35,14 +35,14 @@ const InputField: FC<InputFieldProps<FieldValues>> = ({ label, name, type = "tex
           <input
             {...register(name)}
             type={type === "password" && !showPassword ? "password" : "text"}
-            className="border p-2 rounded w-full pr-10"
+            className="border p-2 rounded w-full pr-10 h-10"
           />
           {type === "password" && (
             <button type="button" onClick={togglePassword} className="absolute inset-y-0 right-2 flex items-center ">
               {showPassword ? (
-                <Icons name="eye-closed" className="w-8 h-8 fill-green-900 stroke-green-900" />
+                <Icons name="eye-closed" className="w-8 h-8 fill-[var(--colour-green)] stroke-[var(--colour-green)]" />
               ) : (
-                <Icons name={"eye"} className="w-8 h-8 fill-green-900 stroke-green-900" />
+                <Icons name={"eye"} className="w-8 h-8 fill-[var(--colour-green)] stroke-[var(--colour-green)]" />
               )}
             </button>
           )}

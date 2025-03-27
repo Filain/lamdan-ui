@@ -21,7 +21,7 @@ const eslintConfig = [
       "import/no-duplicates": "error",
       "@typescript-eslint/no-empty-object-type": "off",
       semi: ["error"],
-      quotes: ["error", "double"],
+      quotes: ["error", "double", { allowTemplateLiterals: true }],
       "prefer-arrow-callback": ["error"],
       "prefer-template": ["error"],
       "max-len": ["error", { "code": 140, "ignoreComments": true }],

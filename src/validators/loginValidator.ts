@@ -14,3 +14,4 @@ const loginValidator = Joi.object({
     .messages({ "string.min": "Password must be at least 3 characters long" }),
 });
 export { loginValidator };
+

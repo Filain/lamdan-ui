@@ -8,7 +8,7 @@ const montserratSans = Montserrat({
   weight: ["400", "700"],
   style: ["normal"],
   display: "swap",
-  variable: "--font-montserrat",
+  variable: "--font-mont",
 });
 // оголошуються змінні для підключених шрифтів
 // <body className={`${montserratSans.variable} antialiased`}> Додає змінні шрифтів

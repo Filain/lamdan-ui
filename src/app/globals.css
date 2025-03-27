@@ -1,50 +1,75 @@
 @import "tailwindcss";
+
 @tailwind utilities;
 
 
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background-color: #ffffff;
+  --text-color: #171717;
+  --colour-grey: #888888;
 }
 
-@layer base {}
-
-@apply font-montserrat {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+@theme {
+  --color-green-700: #22c950;
+  --color-green-800: #095307;
+  --color-gray-500: #888888;
+  --showLayer: showLayer 0.3s ease-in forwards;
+  --hideLayer: hideLayer 0.3s ease-out forwards;
 }
 
-@theme inline {
-  /*--color-background: var(--background);*/
-  /*--color-foreground: var(--foreground);*/
-  --font-sans: var(--font-montserrat);
-  /*--font-mono: var(--font-geist-mono);*/
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #1e1f22;
-    --foreground: #ededed;
+@layer base {
+  *,
+  :hover {
+    scrollbar-color: unset;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-green-700);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
   }
 }
 
+input, textarea, select {
+  background-color: var(--colour-grey); /* Сірий фон */
+  color: var(--text-color); /* Колір тексту (можна змінити на інший, якщо потрібно) */
+  border: none;
+  padding: 0.5rem; /* Додаємо внутрішні відступи */
+  border-radius: 4px; /* Круглі кути */
+}
+
+/* Стилізуємо інпути при фокусі (коли на них натискають) */
+input:focus, textarea:focus, select:focus {
+  background-color: var(--color-gray-500); /* Зелене підсвічування фону при фокусі */
+  border: none; /* Зелена рамка при фокусі */
+  color: var(--text-color); /* Білий текст */
+  outline: none; /* Видаляємо стандартну підсвітку фокусу */
+}
+
+/* Стилізуємо плейсхолдери */
+input::placeholder, textarea::placeholder {
+  color: var(--color-gray-500); /* Колір тексту в плейсхолдері */
+}
 
 
-/* Скидаємо стандартне синє підсвічування */
 
 
 /* Вибрані опції в меню будуть мати зелений фон і білий текст */
 select option:checked {
-  background-color: #22c55e; /* Зелене підсвічування вибраної опції */
-  color: white ; /* Білий текст */
+  background-color: var(--color-gray-500); /* Зелене підсвічування вибраної опції */
+  color: var(--text-color) ; /* Білий текст */
 }
 
 /* Зелений фон при наведенні мишкою */
 select option:hover {
-  background-color: #22c55e; /* Зелене підсвічування при наведенні */
-  color: white ; /* Білий текст при наведенні */
+  background-color: var(--color-gray-500); /* Зелене підсвічування при наведенні */
+  color:  var(--text-color) ; /* Білий текст при наведенні */
 }
 
 /* Видалення синьої підсвітки в деяких браузерах (Firefox, Safari) */
@@ -52,15 +77,15 @@ select option:hover {
 
 /* Всі опції по замовчуванню мають зелений текст */
 select option {
-  color: #22c55e; /* Зелений текст у всіх опціях */
-  background-color: white; /* Білий фон */
+  color: var(--color-gray-500); /* Зелений текст у всіх опціях */
+  background-color:  var(--background-color); /* Білий фон */
 }
 
 
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--background-color);
+  color: var(--text-color);
   font-family: Arial, Helvetica, sans-serif;
 }
 
