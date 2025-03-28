@@ -14,6 +14,7 @@ interface InputFieldProps<T extends FieldValues> {
 
 const InputField: FC<InputFieldProps<FieldValues>> = ({ label, name, type = "text", register, options }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { ...inputProps } = register(name);
 
   const togglePassword = () => {
     setShowPassword((prev) => !prev);
@@ -23,7 +24,7 @@ const InputField: FC<InputFieldProps<FieldValues>> = ({ label, name, type = "tex
     <div className="flex flex-col relative">
       <label className="mb-1 font-medium">{label}</label>
       {type === "select" && options ? (
-        <select {...register(name)} className="border p-2 rounded w-full h-10">
+        <select {...inputProps} className="border p-2 rounded w-full h-10">
           {Object.entries(options).map(([value, display]) => (
             <option key={value} value={value}>
               {display}
@@ -33,7 +34,7 @@ const InputField: FC<InputFieldProps<FieldValues>> = ({ label, name, type = "tex
       ) : (
         <div className="relative">
           <input
-            {...register(name)}
+            {...inputProps}
             type={type === "password" && !showPassword ? "password" : "text"}
             className="border p-2 rounded w-full pr-10 h-10"
           />

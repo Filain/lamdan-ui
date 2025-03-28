@@ -1,3 +1,6 @@
+"use client";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 export default function PaginationComponent() {
   return (
     <div>
