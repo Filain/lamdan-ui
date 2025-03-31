@@ -3,7 +3,8 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
-import InputField from "@/components/ui/form/InputField";
+import { InputSelect } from "@/components/ui/form/InputSelect";
+import InputText from "@/components/ui/form/InputText";
 import { Course, CourseFormat, CourseType, Status } from "@/constants/enums";
 import { orderValidator } from "@/validators/orderValidator";
 
@@ -17,35 +18,35 @@ export default function OrderFormComponent() {
   });
   return (
     <>
-      <form onSubmit={handleSubmit(() => console.log("submit"))} className="border-2  p-4 w-[700px]">
+      <form onSubmit={handleSubmit((data) => console.log(data))} className="border-2  p-4 w-[700px]">
         <div className="flex gap-6 ">
           <div className="w-1/2">
-            <InputField label="Group" name="group" type="text" register={register} />
+            <InputText {...register("group")} label="Group" />
             <p className="text-red-500 text-sm h-4">{errors.group?.message ? String(errors.group?.message) : ""}</p>
-            <InputField label="Name" name="name" type="text" register={register} />
+            <InputText {...register("name")} label="Name" />
             <p className="text-red-500 text-sm h-4">{errors.name?.message ? String(errors.name?.message) : ""}</p>
-            <InputField label="Surname" name="surname" type="text" register={register} />
+            <InputText {...register("surname")} label="Surname" />
             <p className="text-red-500 text-sm h-4">{errors.surname?.message ? String(errors.surname?.message) : ""}</p>
-            <InputField label="Email" name="email" type="text" register={register} />
+            <InputText {...register("email")} label="Email" />
             <p className="text-red-500 text-sm h-4">{errors.email?.message ? String(errors.email?.message) : ""}</p>
-            <InputField label="Phone" name="phone" type="text" register={register} />
+            <InputText {...register("phone")} label="Phone" />
             <p className="text-red-500 text-sm h-4">{errors.phone?.message ? String(errors.phone?.message) : ""}</p>
-            <InputField label="Age" name="age" type="text" register={register} />
+            <InputText {...register("age")} label="Age" />
             <p className="text-red-500 text-sm h-4">{errors.age?.message ? String(errors.age?.message) : ""}</p>
           </div>
           <div className="w-1/2 ">
-            <InputField label="Status" name="status" type="select" options={Status} register={register} />
-            <p className="text-red-500 text-sm h-4"></p>
-            <InputField label="Sum" name="sum" type="text" register={register} />
+            <InputSelect {...register("status")} name="status" label="Status" options={Status} />
+            <p className="text-red-500 text-sm h-4">{errors.status?.message ? String(errors.status?.message) : ""}</p>
+            <InputText {...register("sum")} label="Sum" />
             <p className="text-red-500 text-sm h-4">{errors.sum?.message ? String(errors.sum?.message) : ""}</p>
-            <InputField label="Already paid" name="alreadyPaid" type="text" register={register} />
-            <p className="text-red-500 text-sm h-4">{errors.surname?.message ? String(errors.surname?.message) : ""}</p>
-            <InputField label="Course" name="course" type="select" options={Course} register={register} />
-            <p className="text-red-500 text-sm h-4"></p>
-            <InputField label="Course format" name="courseFormat" type="select" options={CourseFormat} register={register} />
-            <p className="text-red-500 text-sm h-4"></p>
-            <InputField label="Course type" name="courseType" type="select" options={CourseType} register={register} />
-            <p className="text-red-500 text-sm h-4"></p>
+            <InputText {...register("alreadyPaid")} label="Already paid" />
+            <p className="text-red-500 text-sm h-4">{errors.alreadyPaid?.message ? String(errors.alreadyPaid?.message) : ""}</p>
+            <InputSelect {...register("course")} name="course" label="Course" options={Course} />
+            <p className="text-red-500 text-sm h-4">{errors.course?.message ? String(errors.course?.message) : ""}</p>
+            <InputSelect {...register("courseFormat")} name="courseFormat" label="Course format" options={CourseFormat} />
+            <p className="text-red-500 text-sm h-4">{errors.courseFormat?.message ? String(errors.courseFormat?.message) : ""}</p>
+            <InputSelect {...register("courseType")} name="courseType" label="Course type" options={CourseType} />
+            <p className="text-red-500 text-sm h-4">{errors.courseType?.message ? String(errors.courseType?.message) : ""}</p>
           </div>
         </div>
         <div className="flex  justify-end gap-4 ">

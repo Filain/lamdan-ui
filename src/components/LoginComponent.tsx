@@ -3,12 +3,13 @@
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
-import InputField from "@/components/ui/form/InputField";
+import InputText from "@/components/ui/form/InputText";
 import { authService, IloginData } from "@/services/authService";
 import { loginValidator } from "@/validators/loginValidator";
+import InputPassword from "@/components/ui/form/InputPassword";
 
 export default function LoginComponent() {
   const router = useRouter();
@@ -45,12 +46,10 @@ export default function LoginComponent() {
   return (
     <div>
       <form onSubmit={handleSubmit(formSubmit)} className="flex flex-col border-2 w-[400px] p-4">
-        {/*<InputField label="Email" name="email" type="text" register={register("email")} />*/}
-        <input type="text" placeholder="Email" {...register("email")} />
-        <input type="password" placeholder="Password" {...register("password")} />
-        {errors.email?.message && <p className="text-red-500 text-sm">{String(errors.email.message)}</p>}
-        {/*<InputField label="Password" name="password" type="password" register={register("password")} />*/}
-        {errors.password?.message && <p className="text-red-500 text-sm">{String(errors.password.message)}</p>}
+        <InputText {...register("email")} label={"Email"} />
+        <p className="text-red-500 text-sm h-4">{errors.email?.message ? String(errors.email?.message) : ""}</p>
+        <InputPassword {...register("password")} label={"Password"} />
+        <p className="text-red-500 text-sm h-4">{errors.password?.message ? String(errors.password?.message) : ""}</p>
         <Button type="submit" className="mt-4 p-2 ">
           Login
         </Button>
