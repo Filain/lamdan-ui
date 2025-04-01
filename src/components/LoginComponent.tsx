@@ -1,24 +1,39 @@
 "use client";
 
 import { joiResolver } from "@hookform/resolvers/joi";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
+import InputPassword from "@/components/ui/form/InputPassword";
 import InputText from "@/components/ui/form/InputText";
 import { authService, IloginData } from "@/services/authService";
+import { useUserStore } from "@/store/useUserStore";
 import { loginValidator } from "@/validators/loginValidator";
-import InputPassword from "@/components/ui/form/InputPassword";
 
 export default function LoginComponent() {
   const router = useRouter();
-  const { mutate } = useMutation({
-    mutationFn: (variables: IloginData) => authService.login(variables),
-    onSuccess: () => {
-      router.push("/main");
-    },
-  });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  // const queryClient = useQueryClient();
+  const { setUser, user } = useUserStore();
+  // const { mutate } = useMutation({
+  //   mutationFn: (variables: IloginData) => authService.login(variables),
+  //   onSuccess: (data) => {
+  //     setUser(data);
+  //
+  //     router.push("/main");
+  //   },
+  //   onError: (error: AxiosError) => {
+  //     if (error.status === 404) {
+  //       setErrorMessage("Login or password is incorrect");
+  //     } else {
+  //       setErrorMessage("Error");
+  //     }
+  //   },
+  // });
 
   const {
     register,
@@ -29,19 +44,25 @@ export default function LoginComponent() {
   });
 
   const formSubmit: SubmitHandler<IloginData> = async (user) => {
-    mutate(user);
-  };
+    setErrorMessage(null);
+    authService
+      .login(user)
+      .then((data) => {
+        if (data) {
+          setUser(data);
+          router.push("/main");
+        }
+      })
+      .catch((error: AxiosError) => {
+        if (error.status === 404) {
+          setErrorMessage("Login or password is incorrect");
+        } else {
+          setErrorMessage("Error");
+        }
+      });
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   // const response = await authService.login(data.email, data.password);
-  //   mutate(data.email, data.password);
-  //   // if (response?.status === 200) {
-  //   //   console.log("Login successful!");
-  //   // }
-  //   // if (response === "fulfilled") {
-  //   //   console.log();
-  //   // }
-  // });
+    // mutate(user);
+  };
 
   return (
     <div>
@@ -53,6 +74,7 @@ export default function LoginComponent() {
         <Button type="submit" className="mt-4 p-2 ">
           Login
         </Button>
+        {errorMessage ? <p className="text-red-500 text-sm h-4 text-center">{errorMessage}</p> : <p className="h-4"></p>}
       </form>
     </div>
   );

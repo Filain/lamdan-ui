@@ -36,55 +36,15 @@
   }
 }
 
-input:-webkit-autofill,
-textarea:-webkit-autofill,
-select:-webkit-autofill {
-  background-color:var(--color-gray-100) !important; /* bg-gray-200 */
-  color: inherit;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-
-/*input, textarea, select {*/
-/*  background-color: var(--colour-grey);*/
-/*  color: var(--text-color);*/
-/*  border: none;*/
-/*  padding: 0.5rem;*/
-/*  border-radius: 4px;*/
-/*  transition: background-color 0.2s ease-in-out;*/
+/*input:-webkit-autofill,*/
+/*textarea:-webkit-autofill,*/
+/*select:-webkit-autofill {*/
+/*  background-color:var(--color-gray-100) !important; !* bg-gray-200 *!*/
+/*  color: inherit;*/
+/*  transition: background-color 5000s ease-in-out 0s;*/
 /*}*/
 
-/*input[type=text]:focus, textarea:focus, select:focus {*/
-/*  background-color: var(--color-gray-500);*/
-/*  border: none;*/
-/*  color: var(--text-color);*/
-/*  outline: none;*/
-/*}*/
 
-/*input::placeholder, textarea::placeholder {*/
-/*  color: var(--color-gray-500);*/
-/*}*/
-
-/*input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {*/
-/*  background-color: var(--color-gray-500);*/
-/*  color: var(--text-color);*/
-/*  transition: background-color 0s ease-in-out 0s;*/
-/*}*/
-
-/*select option:checked {*/
-/*  background-color: var(--color-gray-500);*/
-/*  color: var(--text-color) ;*/
-/*}*/
-
-/*select option:hover {*/
-/*  background-color: var(--color-gray-500);*/
-/*  color:  var(--text-color) ;*/
-/*}*/
-
-/*select option {*/
-/*  color: var(--color-gray-500);*/
-/*  background-color:  var(--background-color);*/
-/*}*/
 
 body {
   background: var(--background-color);

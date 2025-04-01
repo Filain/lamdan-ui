@@ -25,6 +25,10 @@ const authService = {
     const { data } = await apiService.post(urls.auth.login, { email: dto.email, password: dto.password });
     return data;
   },
+  async me(): Promise<IUser> {
+    const { data } = await apiService.get(urls.auth.me);
+    return data;
+  },
 };
 
 export { authService };

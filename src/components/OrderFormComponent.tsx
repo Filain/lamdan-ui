@@ -16,6 +16,7 @@ export default function OrderFormComponent() {
   } = useForm({
     resolver: joiResolver(orderValidator),
   });
+
   return (
     <>
       <form onSubmit={handleSubmit((data) => console.log(data))} className="border-2  p-4 w-[700px]">
