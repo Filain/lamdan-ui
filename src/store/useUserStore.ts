@@ -10,8 +10,9 @@ interface IUserState {
 
 export const useUserStore = create<IUserState>((set) => ({
   user: null,
+
   setUser: (userData) => {
-    // console.log("Setting user:", userData); // Додаємо лог тут
+    console.log("Setting user:", userData); // Додаємо лог тут
     set({ user: userData });
   },
 
