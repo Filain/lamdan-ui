@@ -27,9 +27,26 @@ export interface IOrder {
   status: string | null;
 }
 
+interface IOrderQuery {
+  page?: string;
+  limit?: string;
+  sort?: string;
+  name?: string;
+  surname?: string;
+  email?: string;
+  phone?: string;
+  age?: string;
+  course?: string;
+  course_format?: string;
+  course_type?: string;
+  status?: string;
+  group?: string;
+  my?: string;
+}
+
 const orderService = {
-  async getAll(): Promise<IOrderResponseData> {
-    const { data } = await apiService.get(urls.order.getAll);
+  async getAll(query?: IOrderQuery): Promise<IOrderResponseData> {
+    const { data } = await apiService.get(urls.order.getAll, { params: query });
     return data;
   },
 

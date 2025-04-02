@@ -27,6 +27,7 @@ const eslintConfig = [
       "prefer-arrow-callback": ["error"],
       "prefer-template": ["error"],
       "max-len": ["error", { code: 140, ignoreComments: true }],
+      "prefer-const": "off"
     },
   }),
 ];

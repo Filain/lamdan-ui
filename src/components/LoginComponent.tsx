@@ -1,10 +1,9 @@
 "use client";
 
 import { joiResolver } from "@hookform/resolvers/joi";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
@@ -18,7 +17,7 @@ export default function LoginComponent() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   // const queryClient = useQueryClient();
-  const { setUser, user } = useUserStore();
+  const { setUser } = useUserStore();
   // const { mutate } = useMutation({
   //   mutationFn: (variables: IloginData) => authService.login(variables),
   //   onSuccess: (data) => {

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useLayoutEffect, useState } from "react";
 
+import Loading from "@/app/loading";
 import { authService } from "@/services/authService";
 import { useUserStore } from "@/store/useUserStore";
 
@@ -40,10 +41,10 @@ export default function AuthUserRequired({ children }: { children: React.ReactNo
     } else {
       setLoading(false); // Якщо користувач авторизований і не адмін, зупиняємо завантаження
     }
-  }, [user, router]);
+  }, [setUser, user, router]);
 
   if (loading) {
-    return <div>Loading...</div>; // Показуємо спінер або текст "Loading..."
+    return <Loading />; // Показуємо спінер або текст "Loading..."
   }
 
   return <>{children}</>;
