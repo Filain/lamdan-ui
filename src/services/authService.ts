@@ -29,6 +29,10 @@ const authService = {
     const { data } = await apiService.get(urls.auth.me);
     return data;
   },
+  async logout() {
+    await apiService.post(urls.auth.logout);
+    return true;
+  },
 };
 
 export { authService };

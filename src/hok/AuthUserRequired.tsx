@@ -1,5 +1,6 @@
 "use client";
 
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useLayoutEffect, useState } from "react";
 
@@ -9,42 +10,38 @@ import { useUserStore } from "@/store/useUserStore";
 
 export default function AuthUserRequired({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  // const pathname = usePathname();
   const { user, setUser } = useUserStore();
-  const [loading, setLoading] = useState(true); // Статус завантаження
-  // const { data, isSuccess } = useQuery({ queryKey: ["me"], queryFn: () => authService.me(), onSuccess: (data) => setUser(data) });
-  // if (!user && isSuccess) {
-  //   setUser();
-  // }
+  const [loading, setLoading] = useState(true);
 
   useLayoutEffect(() => {
-    if (!user) {
-      const checkAuth = async () => {
-        try {
-          if (!user) {
-            const user = await authService.me();
-            if (user) {
-              setUser(user);
-            }
-          } else {
-            router.push("/login");
-          }
-        } finally {
-          setLoading(false);
+    const checkAuth = async () => {
+      try {
+        const currentUser = await authService.me();
+        if (currentUser) {
+          setUser(currentUser);
+        } else {
+          router.push("/login");
         }
-      };
-      checkAuth();
-    }
+      } catch (e: unknown) {
+        if (e instanceof AxiosError && e.response?.status === 401) {
+          router.push("/login");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    if (user?.role === "admin") {
-      router.push("/login");
+    // Перевіряємо користувача лише якщо його ще немає
+    if (!user) {
+      checkAuth();
     } else {
-      setLoading(false); // Якщо користувач авторизований і не адмін, зупиняємо завантаження
+      setLoading(false); // Якщо користувач вже є, зупиняємо завантаження
     }
   }, [setUser, user, router]);
 
+  // Показуємо лише спінер під час перевірки автентифікації
   if (loading) {
-    return <Loading />; // Показуємо спінер або текст "Loading..."
+    return <Loading />;
   }
 
   return <>{children}</>;
