@@ -3,21 +3,73 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
+import Loading from "@/app/loading";
 import OrderComponent from "@/components/OrderContainer/OrderComponent";
 import { orderService } from "@/services/orderService";
 import { useOrderStore } from "@/store/useOrderStore";
-import Loading from "@/app/loading";
 
 export default function OrdersComponent() {
   const searchParams = useSearchParams();
   const currentSort = searchParams.get("sort") || "id";
+  const my = searchParams.get("my") || undefined;
+  const group = searchParams.get("group") || undefined;
+  const name = searchParams.get("name") || undefined;
+  const surname = searchParams.get("surname") || undefined;
+  const email = searchParams.get("email") || undefined;
+  const phone = searchParams.get("phone") || undefined;
+  const age = searchParams.get("age") || undefined;
+  const status = searchParams.get("status") || undefined;
+  const sum = searchParams.get("sum") || undefined;
+  const already_paid = searchParams.get("alreadyPaid") || undefined;
+  const course = searchParams.get("course") || undefined;
+  const course_format = searchParams.get("courseFormat") || undefined;
+  const course_type = searchParams.get("courseType") || undefined;
+
   const page = searchParams.get("page") || "1";
 
   const { setTotal } = useOrderStore();
+  const sortParams = [currentSort, group, name, surname, email, phone, age, status, sum, already_paid, course, course_format, course_type]
+    .filter(Boolean)
+    .join(",");
 
   const { data, isPending, error } = useQuery({
-    queryKey: ["orders", page, currentSort],
-    queryFn: () => orderService.getAll({ page, sort: currentSort }),
+    queryKey: [
+      "orders",
+      page,
+      currentSort,
+      group,
+      name,
+      surname,
+      email,
+      phone,
+      age,
+      status,
+      sum,
+      already_paid,
+      course,
+      course_format,
+      course_type,
+      my,
+      sortParams,
+    ],
+    queryFn: () =>
+      orderService.getAll({
+        page,
+        sort: sortParams,
+        group,
+        name,
+        surname,
+        email,
+        phone,
+        age,
+        status,
+        sum,
+        already_paid,
+        course,
+        course_format,
+        course_type,
+        my,
+      }),
   });
 
   useEffect(() => {
@@ -47,7 +99,7 @@ export default function OrdersComponent() {
   if (error) {
     return <span>Error: {error.message}</span>;
   }
-  if (isPending) {
+  if (isPending || !data) {
     return <Loading />;
   }
   return (

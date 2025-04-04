@@ -41,7 +41,9 @@ interface IOrderQuery {
   course_type?: string;
   status?: string;
   group?: string;
-  my?: string;
+  my?: "true" | "false";
+  sum?: string;
+  already_paid?: string;
 }
 
 const orderService = {

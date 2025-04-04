@@ -10,7 +10,9 @@ export default function PaginationComponent() {
 
   const page = parseInt(searchParams.get("page") || "1");
   const goToPage = (pageNumber: number) => {
-    router.push(`?page=${pageNumber}`);
+    const newQueryParams = new URLSearchParams(searchParams.toString());
+    newQueryParams.set("page", String(pageNumber));
+    router.push(`?${newQueryParams.toString()}`);
   };
 
   const firstPage = 1;

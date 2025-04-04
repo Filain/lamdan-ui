@@ -1,4 +1,5 @@
 "use client";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 import Button from "@/components/ui/Button";
@@ -7,9 +8,11 @@ import { authService } from "@/services/authService";
 
 export default function HeaderComponent() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const logout = () => {
+    queryClient.clear();
     authService.logout();
-    router.push("/login");
+    router.replace("/login");
   };
   return (
     <header className="flex justify-between items-center h-16 bg-green-200">
