@@ -9,14 +9,9 @@ interface InputProps extends HTMLProps<HTMLInputElement> {
 const InputNumber = forwardRef((props: InputProps, ref: Ref<HTMLInputElement>) => {
   const { label, ...inputProps } = props;
   return (
-    <div>
-      <label>{label}</label>
-      <input
-        type="number"
-        {...inputProps}
-        ref={ref}
-        className="border p-2 rounded w-full  h-10 bg-gray-100 border-none focus:outline-green-500"
-      />
+    <div className="flex flex-col flex-1">
+      <label className="">{label}</label>
+      <input type="number" {...inputProps} ref={ref} className=" p- rounded w-full  h-10 bg-gray-100 focus:outline-green-500" />
     </div>
   );
 });

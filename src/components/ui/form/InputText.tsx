@@ -9,7 +9,7 @@ interface InputProps extends HTMLProps<HTMLInputElement> {
 const InputText = forwardRef((props: InputProps, ref: Ref<HTMLInputElement>) => {
   const { label, ...inputProps } = props;
   return (
-    <div>
+    <div className="flex flex-col flex-1">
       <label>{label}</label>
       <input
         type="text"
