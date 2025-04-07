@@ -10,15 +10,36 @@ import { InputSelect } from "@/components/ui/form/InputSelect";
 import InputText from "@/components/ui/form/InputText";
 import Icons from "@/components/ui/Icons";
 import { Course, CourseFormat, CourseType, Status } from "@/constants/enums";
+import { exelService } from "@/services/exelService";
 
 export default function FilterComponent() {
   const { control, register, reset } = useForm();
-
   const router = useRouter();
   const searchParams = useSearchParams();
   const watchedValues = useWatch({
     control,
   });
+
+  const currentSort = searchParams.get("sort") || "id";
+  const my = searchParams.get("my") === "true";
+  const group = searchParams.get("group") || undefined;
+  const name = searchParams.get("name") || undefined;
+  const surname = searchParams.get("surname") || undefined;
+  const email = searchParams.get("email") || undefined;
+  const phone = searchParams.get("phone") || undefined;
+  const age = searchParams.get("age") || undefined;
+  const status = searchParams.get("status") || undefined;
+  const sum = searchParams.get("sum") || undefined;
+  const already_paid = searchParams.get("alreadyPaid") || undefined;
+  const course = searchParams.get("course") || undefined;
+  const course_format = searchParams.get("courseFormat") || undefined;
+  const course_type = searchParams.get("courseType") || undefined;
+
+  const page = searchParams.get("page") || "1";
+
+  const sortParams = [currentSort, group, name, surname, email, phone, age, status, sum, already_paid, course, course_format, course_type]
+    .filter(Boolean)
+    .join(",");
 
   useEffect(() => {
     console.log("Watched values:", watchedValues);
@@ -35,8 +56,28 @@ export default function FilterComponent() {
     router.push(`?${params.toString()}`);
   }, [watchedValues]);
 
+  const downloadExcel = async () => {
+    await exelService.getAll({
+      page,
+      sort: sortParams,
+      group,
+      name,
+      surname,
+      email,
+      phone,
+      age,
+      status,
+      sum,
+      already_paid,
+      course,
+      course_format,
+      course_type,
+      my,
+    });
+  };
+
   return (
-    <form className="border-2 flex flex-row justify-center align-middle  gap-2 p-4">
+    <form className="border-2 flex flex-row justify-center items-center  gap-2 p-4">
       <div>
         <div className="flex gap-2 px-2">
           <InputText {...register("group")} label="Group" />
@@ -58,6 +99,9 @@ export default function FilterComponent() {
       <InputCheckBox label="My" {...register("my")} />
       <Button type="submit" onClick={() => reset()} className="w-10 h-10" icon={true}>
         <Icons name="refresh" className="w-8 h-8 fill-transparent stroke-white   stroke-1" />
+      </Button>
+      <Button type="button" onClick={() => downloadExcel()} className="w-10 h-10" icon={true}>
+        <Icons name="download" className="w-8 h-8 fill-transparent stroke-white   stroke-2" />
       </Button>
     </form>
   );

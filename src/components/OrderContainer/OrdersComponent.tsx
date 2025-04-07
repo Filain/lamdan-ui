@@ -9,9 +9,11 @@ import { orderService } from "@/services/orderService";
 import { useOrderStore } from "@/store/useOrderStore";
 
 export default function OrdersComponent() {
+  const { setTotal } = useOrderStore();
+
   const searchParams = useSearchParams();
   const currentSort = searchParams.get("sort") || "id";
-  const my = searchParams.get("my") || undefined;
+  const my = searchParams.get("my") === "true";
   const group = searchParams.get("group") || undefined;
   const name = searchParams.get("name") || undefined;
   const surname = searchParams.get("surname") || undefined;
@@ -27,7 +29,6 @@ export default function OrdersComponent() {
 
   const page = searchParams.get("page") || "1";
 
-  const { setTotal } = useOrderStore();
   const sortParams = [currentSort, group, name, surname, email, phone, age, status, sum, already_paid, course, course_format, course_type]
     .filter(Boolean)
     .join(",");
@@ -99,7 +100,10 @@ export default function OrdersComponent() {
   if (error) {
     return <span>Error: {error.message}</span>;
   }
-  if (isPending || !data) {
+  if (isPending) {
+    return <Loading />;
+  }
+  if (!data) {
     return <Loading />;
   }
   return (

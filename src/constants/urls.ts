@@ -14,6 +14,9 @@ const urls = {
     patch: (id: string) => `/order/${id}`,
     delete: (id: string) => `/order/${id}`,
   },
+  excel: {
+    get: "/exel",
+  },
 };
 
 export { baseURL, urls };

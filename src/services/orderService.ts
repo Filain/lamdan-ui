@@ -27,7 +27,7 @@ export interface IOrder {
   status: string | null;
 }
 
-interface IOrderQuery {
+export interface IOrderQuery {
   page?: string;
   limit?: string;
   sort?: string;
@@ -41,7 +41,7 @@ interface IOrderQuery {
   course_type?: string;
   status?: string;
   group?: string;
-  my?: "true" | "false";
+  my?: boolean;
   sum?: string;
   already_paid?: string;
 }

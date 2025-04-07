@@ -52,6 +52,10 @@ export default function PaginationComponent() {
     eighthPage = "...";
   }
 
+  if (total === 0 || total === 1) {
+    return null;
+  }
+
   if (total < 10) {
     return (
       <div className="flex justify-center gap-2 pt-4">
