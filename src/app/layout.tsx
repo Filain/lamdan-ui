@@ -3,6 +3,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
+import Providers from "@/lib/Provider";
+
 const montserratSans = Montserrat({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -28,7 +30,7 @@ export default function RootLayout({
       <body className={`${montserratSans.variable} antialiased`}>
         {/*className={`${montserratSans.variable} Додає змінні шрифтів у клас body*/}
         {/* antialiased покращує згладжування тексту*/}
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

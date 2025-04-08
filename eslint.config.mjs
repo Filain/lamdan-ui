@@ -1,4 +1,5 @@
 import { FlatCompat } from "@eslint/eslintrc";
+import pluginQuery from "@tanstack/eslint-plugin-query";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -10,6 +11,7 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  ...pluginQuery.configs["flat/recommended"],
   ...compat.config({
     extends: ["next/core-web-vitals", "next/typescript", "prettier"],
     plugins: ["simple-import-sort"],
@@ -24,8 +26,8 @@ const eslintConfig = [
       quotes: ["error", "double", { allowTemplateLiterals: true }],
       "prefer-arrow-callback": ["error"],
       "prefer-template": ["error"],
-      "max-len": ["error", { "code": 140, "ignoreComments": true }],
-
+      "max-len": ["error", { code: 140, ignoreComments: true }],
+      "prefer-const": "off"
     },
   }),
 ];
