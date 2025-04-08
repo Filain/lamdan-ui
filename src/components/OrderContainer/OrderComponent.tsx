@@ -1,5 +1,7 @@
 "use client";
 
+import dayjs from "dayjs";
+
 import { IOrder } from "@/services/orderService";
 
 interface IOrderProps {
@@ -34,16 +36,18 @@ export default function OrderComponent({ order, isDark }: IOrderProps) {
       <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{surname}</p>
       <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{email}</p>
       <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{phone}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{age}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{course}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{course_format}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{course_type}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{sum}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{already_paid}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{created_at}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{status}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{group}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{manager}</p>
+      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">{age}</p>
+      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">{course}</p>
+      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">{course_format}</p>
+      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">{course_type}</p>
+      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">{sum}</p>
+      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">{already_paid}</p>
+      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">
+        {dayjs(created_at).format("DD.MM.YYYY")}
+      </p>
+      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default  text-center">{status}</p>
+      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default  text-center">{group}</p>
+      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default  text-center">{manager}</p>
     </div>
   );
 }
