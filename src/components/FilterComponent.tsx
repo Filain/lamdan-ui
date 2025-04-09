@@ -44,6 +44,7 @@ export default function FilterComponent() {
   useEffect(() => {
     console.log("Watched values:", watchedValues);
     const params = new URLSearchParams(searchParams.toString());
+    params.set("page", "1");
 
     Object.entries(watchedValues).forEach(([key, value]) => {
       if (value) {
