@@ -33,7 +33,7 @@ export default function OrdersComponent() {
     .filter(Boolean)
     .join(",");
 
-  const { data, isPending, error } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: [
       "orders",
       page,
@@ -97,15 +97,13 @@ export default function OrdersComponent() {
     router.push(`?${newParams.toString()}`);
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
   if (error) {
     return <span>Error: {error.message}</span>;
   }
-  if (isPending) {
-    return <Loading />;
-  }
-  if (!data) {
-    return <Loading />;
-  }
+
   return (
     <>
       <div className="flex gap-2 bg-green-800 text-white">
@@ -113,7 +111,7 @@ export default function OrdersComponent() {
           className="flex flex-row items-center justify-center cursor-pointer transition-transform hover:scale-105 active:scale-85 w-1/12"
           onClick={() => handleSortClick("_id")}
         >
-          Id{getSortIcon("id")}
+          Id{getSortIcon("_id")}
         </div>
         <div
           className="flex flex-row items-center justify-center cursor-pointer transition-transform hover:scale-105 active:scale-85 w-1/12"

@@ -1,7 +1,9 @@
 "use client";
 
 import dayjs from "dayjs";
+import { useState } from "react";
 
+import OrderCommentComponent from "@/components/OrderContainer/OrderCommentComponent";
 import { IOrder } from "@/services/orderService";
 
 interface IOrderProps {
@@ -10,6 +12,7 @@ interface IOrderProps {
 }
 
 export default function OrderComponent({ order, isDark }: IOrderProps) {
+  const [details, setDetails] = useState<string | null>(null);
   const {
     _id,
     name,
@@ -26,28 +29,88 @@ export default function OrderComponent({ order, isDark }: IOrderProps) {
     status,
     group,
     manager,
+    msg,
+    utm,
   } = order;
 
+  function handleDetail(id: string) {
+    if (details === id) {
+      setDetails(null);
+    } else {
+      setDetails(id);
+    }
+  }
+
   return (
-    // <div className="flex flex-row gap-2 ">
-    <div className={`flex flex-row  gap-2 ${isDark ? "bg-gray-400" : "bg-white"}`}>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{_id}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{name}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{surname}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{email}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default">{phone}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">{age}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">{course}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">{course_format}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">{course_type}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">{sum}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">{already_paid}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default text-center">
-        {dayjs(created_at).format("DD.MM.YYYY")}
-      </p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default  text-center">{status}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default  text-center">{group}</p>
-      <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap cursor-default  text-center">{manager}</p>
-    </div>
+    <>
+      <div
+        className={` flex flex-row  gap-2 cursor-pointer ${details === _id ? "bg-green-800" : isDark ? "bg-gray-400" : "bg-white"}`}
+        onClick={() => handleDetail(_id)}
+      >
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap " title={_id}>
+          {_id}
+        </p>
+        <p
+          className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap text-transform: capitalize"
+          title={name.charAt(0).toUpperCase() + name.slice(1)}
+        >
+          {name}
+        </p>
+        <p
+          className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap text-transform: capitalize"
+          title={surname.charAt(0).toUpperCase() + surname.slice(1)}
+        >
+          {surname}
+        </p>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap " title={email}>
+          {email}
+        </p>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap text-center" title={phone}>
+          {phone}
+        </p>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={age.toString()}>
+          {age}
+        </p>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={course}>
+          {course}
+        </p>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={course_format}>
+          {course_format}
+        </p>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={course_type}>
+          {course_type}
+        </p>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={sum?.toString()}>
+          {sum}
+        </p>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={already_paid?.toString()}>
+          {already_paid}
+        </p>
+        <p
+          className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center"
+          title={dayjs(created_at).format("DD.MM.YYYY").toString()}
+        >
+          {dayjs(created_at).format("DD.MM.YYYY")}
+        </p>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap   text-center" title={status?.toString()}>
+          {status}
+        </p>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap   text-center" title={group?.toString()}>
+          {group}
+        </p>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap   text-center" title={manager?.toString()}>
+          {manager}
+        </p>
+      </div>
+      {details === _id && (
+        <div className="flex flex-row gap-2  h-min-20">
+          <div className="flex flex-col gap-2 w-1/2 ">
+            <p className="cursor-default">Massage:{msg}</p>
+            <p className="cursor-default ">UTM:{utm}</p>
+          </div>
+          <OrderCommentComponent orderId={details} />
+        </div>
+      )}
+    </>
   );
 }

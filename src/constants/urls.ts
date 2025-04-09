@@ -17,6 +17,10 @@ const urls = {
   excel: {
     get: "/exel",
   },
+  comment: {
+    getAll: (id: string) => `/comment/${id}`,
+    post: (id: string) => `/comment/${id}`,
+  },
 };
 
 export { baseURL, urls };

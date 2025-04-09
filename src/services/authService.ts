@@ -8,7 +8,8 @@ export interface IloginData {
 
 export interface IUser {
   _id: string;
-  username?: string | null;
+  name?: string | null;
+  surname?: string | null;
   email: string;
   password?: string | null;
   role: string;
@@ -16,7 +17,6 @@ export interface IUser {
   isBanned: boolean;
   createdAt?: Date;
   updatedAt?: Date;
-  orders?: string;
   __v?: number;
 }
 

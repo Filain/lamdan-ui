@@ -1,14 +1,20 @@
 .loaderContainer {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: fixed; /* Фіксована позиція на екрані */
+    top: 0;
+    left: 0;
+    width: 100%; /* Забезпечує, що контейнер буде займати всю ширину */
+    height: 100vh; /* Забезпечує, що контейнер буде займати всю висоту екрану */
+    display: flex;
+    justify-content: center; /* Центрує лоадер по горизонталі */
+    align-items: center; /* Центрує лоадер по вертикалі */
+    z-index: 9999; /* Забезпечує, що лоадер буде зверху */
 }
 
 .loader {
     width: 50px;
     height: 100px;
     display: grid;
-    color: #000;
+    color: #095307;
     background:
             linear-gradient(currentColor 0 0) top/100% 2px,
             radial-gradient(farthest-side at top, #0000 calc(100% - 2px), currentColor calc(100% - 1px), #0000) top,
