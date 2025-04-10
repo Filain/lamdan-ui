@@ -1,4 +1,5 @@
 import { urls } from "@/constants/urls";
+import { IOrderCreate } from "@/interfaces/orderInterface";
 import { apiService } from "@/services/apiService";
 
 export interface IOrderResponseData {
@@ -57,7 +58,7 @@ const orderService = {
     return data;
   },
 
-  async create(dto: IOrder): Promise<IOrder> {
+  async create(dto: IOrderCreate): Promise<IOrder> {
     const { data } = await apiService.post(urls.order.post, dto);
     return data;
   },

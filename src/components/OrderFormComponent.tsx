@@ -1,11 +1,13 @@
 "use client";
 import { joiResolver } from "@hookform/resolvers/joi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
 import { InputSelect } from "@/components/ui/form/InputSelect";
 import InputText from "@/components/ui/form/InputText";
 import { Course, CourseFormat, CourseType, Status } from "@/constants/enums";
+import { IOrderCreate } from "@/interfaces/orderInterface";
 import { IOrder, orderService } from "@/services/orderService";
 import { useModalStore } from "@/store/useModalStore";
 import { orderValidator } from "@/validators/orderValidator";
@@ -16,13 +18,13 @@ interface ICommentProps {
 
 export default function OrderFormComponent({ order }: ICommentProps) {
   const { setModal } = useModalStore();
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
+  } = useForm<IOrderCreate>({
     resolver: joiResolver(orderValidator),
     defaultValues: {
       group: order?.group || "",
@@ -30,24 +32,24 @@ export default function OrderFormComponent({ order }: ICommentProps) {
       surname: order?.surname || "",
       email: order?.email || "",
       phone: order?.phone || "",
-      age: order?.age || "",
+      age: order?.age,
       status: order?.status || "",
-      sum: order?.sum || "",
-      alreadyPaid: order?.already_paid || "",
+      sum: order?.sum,
+      already_paid: order?.already_paid,
       course: order?.course || "",
-      courseFormat: order?.course_format || "",
-      courseType: order?.course_type || "",
+      course_format: order?.course_format || "",
+      course_type: order?.course_type || "",
     },
   });
 
-  // const { mutate } = useMutation({
-  //   mutationFn: (data: IOrder) => orderService.create(data),
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["orders"] });
-  //     setModal(null);
-  //     reset();
-  //   },
-  // });
+  const { mutate } = useMutation({
+    mutationFn: (data: IOrderCreate) => orderService.create(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      setModal(null);
+      reset();
+    },
+  });
 
   const closeModal = () => {
     setModal(null);
@@ -56,12 +58,7 @@ export default function OrderFormComponent({ order }: ICommentProps) {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit((data) => {
-          console.log(data);
-        })}
-        className="border-2 border-green-800 rounded-xl  p-4 w-[700px]"
-      >
+      <form onSubmit={handleSubmit((data) => mutate(data))} className="border-2 border-green-800 rounded-xl  p-4 w-[700px]">
         <div className="flex gap-6 ">
           <div className="w-1/2">
             <InputText {...register("group")} label="Group" />
@@ -82,14 +79,14 @@ export default function OrderFormComponent({ order }: ICommentProps) {
             <p className="text-red-500 text-sm h-4">{errors.status?.message ? String(errors.status?.message) : ""}</p>
             <InputText {...register("sum")} label="Sum" />
             <p className="text-red-500 text-sm h-4">{errors.sum?.message ? String(errors.sum?.message) : ""}</p>
-            <InputText {...register("alreadyPaid")} label="Already paid" />
-            <p className="text-red-500 text-sm h-4">{errors.alreadyPaid?.message ? String(errors.alreadyPaid?.message) : ""}</p>
+            <InputText {...register("already_paid")} label="Already paid" />
+            <p className="text-red-500 text-sm h-4">{errors.already_paid?.message ? String(errors.already_paid?.message) : ""}</p>
             <InputSelect {...register("course")} name="course" label="Course" options={Course} />
             <p className="text-red-500 text-sm h-4">{errors.course?.message ? String(errors.course?.message) : ""}</p>
-            <InputSelect {...register("courseFormat")} name="courseFormat" label="Course format" options={CourseFormat} />
-            <p className="text-red-500 text-sm h-4">{errors.courseFormat?.message ? String(errors.courseFormat?.message) : ""}</p>
-            <InputSelect {...register("courseType")} name="courseType" label="Course type" options={CourseType} />
-            <p className="text-red-500 text-sm h-4">{errors.courseType?.message ? String(errors.courseType?.message) : ""}</p>
+            <InputSelect {...register("course_format")} name="courseFormat" label="Course format" options={CourseFormat} />
+            <p className="text-red-500 text-sm h-4">{errors.course_format?.message ? String(errors.course_format?.message) : ""}</p>
+            <InputSelect {...register("course_type")} name="courseType" label="Course type" options={CourseType} />
+            <p className="text-red-500 text-sm h-4">{errors.course_type?.message ? String(errors.course_type?.message) : ""}</p>
           </div>
         </div>
         <div className="flex  justify-end gap-4 mt-2 ">

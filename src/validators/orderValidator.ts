@@ -36,10 +36,10 @@ const orderValidator = Joi.object({
     }),
   age: Joi.number().integer().min(13).max(70).optional().allow(""),
   sum: Joi.number().integer().min(1).max(100000).optional().allow(""),
-  alreadyPaid: Joi.number().integer().min(1).max(100000).optional().allow(""),
+  already_paid: Joi.number().integer().min(1).max(100000).optional().allow(""),
   status: Joi.string().optional().allow(""),
   course: Joi.string().optional().allow(""),
-  courseType: Joi.string().optional().allow(""),
-  courseFormat: Joi.string().optional().allow(""),
+  course_type: Joi.string().optional().allow(""),
+  course_format: Joi.string().optional().allow(""),
 });
 export { orderValidator };
