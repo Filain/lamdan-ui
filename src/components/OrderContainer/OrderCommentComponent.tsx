@@ -4,24 +4,29 @@ import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
 
 import Loading from "@/app/loading";
+import OrderFormComponent from "@/components/OrderFormComponent";
 import Button from "@/components/ui/Button";
 import InputText from "@/components/ui/form/InputText";
+import Modal from "@/components/ui/Modal";
 import { commentService } from "@/services/commentService";
+import { IOrder } from "@/services/orderService";
+import { useModalStore } from "@/store/useModalStore";
 
 interface ICommentProps {
-  orderId: string;
+  order: IOrder;
 }
 interface IFormData {
   comment: string;
 }
 
-export default function OrderCommentComponent({ orderId }: ICommentProps) {
+export default function OrderCommentComponent({ order }: ICommentProps) {
   const queryClient = useQueryClient();
+  const { modal, setModal } = useModalStore();
   const { reset, register, handleSubmit } = useForm<IFormData>();
-  const { data, isPending: isLoading } = useQuery({ queryKey: ["comments", orderId], queryFn: () => commentService.getAll(orderId) });
+  const { data, isPending: isLoading } = useQuery({ queryKey: ["comments", order._id], queryFn: () => commentService.getAll(order._id) });
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: { comment: string }) => commentService.create(orderId, data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["comments", orderId] }),
+    mutationFn: (data: { comment: string }) => commentService.create(order._id, data),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["comments", order._id] }),
   });
 
   if (isPending || isLoading) {
@@ -58,15 +63,20 @@ export default function OrderCommentComponent({ orderId }: ICommentProps) {
           className="flex flex-row items-end gap-4 p-4 bg-gray-400 mt-4 rounded-xl"
           onSubmit={handleSubmit((data) => sendComment(data))}
         >
-          <InputText {...register("comment")} />
+          <InputText {...register("comment", { required: "Comment is required" })} />
           <Button type="submit" className="h-10">
             Submit
           </Button>
         </form>
       </div>
       <div className="flex flex-col justify-center pr-4">
-        <Button className="h-10">Edit</Button>
+        <Button className="h-10" onClick={() => setModal(order)}>
+          Edit
+        </Button>
       </div>
+      <Modal onClose={() => setModal(null)} isOpen={!!modal}>
+        <OrderFormComponent order={order} />
+      </Modal>
     </div>
   );
 }

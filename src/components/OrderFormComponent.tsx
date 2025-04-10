@@ -6,20 +6,62 @@ import Button from "@/components/ui/Button";
 import { InputSelect } from "@/components/ui/form/InputSelect";
 import InputText from "@/components/ui/form/InputText";
 import { Course, CourseFormat, CourseType, Status } from "@/constants/enums";
+import { IOrder, orderService } from "@/services/orderService";
+import { useModalStore } from "@/store/useModalStore";
 import { orderValidator } from "@/validators/orderValidator";
 
-export default function OrderFormComponent() {
+interface ICommentProps {
+  order?: IOrder;
+}
+
+export default function OrderFormComponent({ order }: ICommentProps) {
+  const { setModal } = useModalStore();
+  // const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: joiResolver(orderValidator),
+    defaultValues: {
+      group: order?.group || "",
+      name: order?.name || "",
+      surname: order?.surname || "",
+      email: order?.email || "",
+      phone: order?.phone || "",
+      age: order?.age || "",
+      status: order?.status || "",
+      sum: order?.sum || "",
+      alreadyPaid: order?.already_paid || "",
+      course: order?.course || "",
+      courseFormat: order?.course_format || "",
+      courseType: order?.course_type || "",
+    },
   });
+
+  // const { mutate } = useMutation({
+  //   mutationFn: (data: IOrder) => orderService.create(data),
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["orders"] });
+  //     setModal(null);
+  //     reset();
+  //   },
+  // });
+
+  const closeModal = () => {
+    setModal(null);
+    reset();
+  };
 
   return (
     <>
-      <form onSubmit={handleSubmit((data) => console.log(data))} className="border-2  p-4 w-[700px]">
+      <form
+        onSubmit={handleSubmit((data) => {
+          console.log(data);
+        })}
+        className="border-2 border-green-800 rounded-xl  p-4 w-[700px]"
+      >
         <div className="flex gap-6 ">
           <div className="w-1/2">
             <InputText {...register("group")} label="Group" />
@@ -50,8 +92,10 @@ export default function OrderFormComponent() {
             <p className="text-red-500 text-sm h-4">{errors.courseType?.message ? String(errors.courseType?.message) : ""}</p>
           </div>
         </div>
-        <div className="flex  justify-end gap-4 ">
-          <Button>CLOSE</Button>
+        <div className="flex  justify-end gap-4 mt-2 ">
+          <Button type={"button"} onClick={() => closeModal()}>
+            CLOSE
+          </Button>
           <Button type="submit">SUBMIT</Button>
         </div>
       </form>

@@ -47,7 +47,7 @@ export default function OrderComponent({ order, isDark }: IOrderProps) {
         className={` flex flex-row  gap-2 cursor-pointer ${details === _id ? "bg-green-800" : isDark ? "bg-gray-400" : "bg-white"}`}
         onClick={() => handleDetail(_id)}
       >
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap " title={_id}>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap " title={_id ?? ""}>
           {_id}
         </p>
         <p
@@ -62,43 +62,43 @@ export default function OrderComponent({ order, isDark }: IOrderProps) {
         >
           {surname}
         </p>
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap " title={email}>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap " title={email ?? ""}>
           {email}
         </p>
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap text-center" title={phone}>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap text-center" title={phone ?? ""}>
           {phone}
         </p>
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={age.toString()}>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={age?.toString() ?? ""}>
           {age}
         </p>
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={course}>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={course ?? ""}>
           {course}
         </p>
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={course_format}>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={course_format ?? ""}>
           {course_format}
         </p>
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={course_type}>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={course_type ?? ""}>
           {course_type}
         </p>
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={sum?.toString()}>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={sum?.toString() ?? ""}>
           {sum}
         </p>
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={already_paid?.toString()}>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={already_paid?.toString() ?? ""}>
           {already_paid}
         </p>
         <p
           className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center"
-          title={dayjs(created_at).format("DD.MM.YYYY").toString()}
+          title={dayjs(created_at).format("DD.MM.YYYY").toString() ?? ""}
         >
           {dayjs(created_at).format("DD.MM.YYYY")}
         </p>
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap   text-center" title={status?.toString()}>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap   text-center" title={status?.toString() ?? ""}>
           {status}
         </p>
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap   text-center" title={group?.toString()}>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap   text-center" title={group?.toString() ?? ""}>
           {group}
         </p>
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap   text-center" title={manager?.toString()}>
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap   text-center" title={manager?.toString() ?? ""}>
           {manager}
         </p>
       </div>
@@ -108,7 +108,7 @@ export default function OrderComponent({ order, isDark }: IOrderProps) {
             <p className="cursor-default">Massage:{msg}</p>
             <p className="cursor-default ">UTM:{utm}</p>
           </div>
-          <OrderCommentComponent orderId={details} />
+          <OrderCommentComponent order={order} />
         </div>
       )}
     </>

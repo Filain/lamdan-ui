@@ -1,27 +1,45 @@
 import Joi from "joi";
 
 const orderValidator = Joi.object({
-  group: Joi.string().alphanum().min(2).max(30).required(),
-  name: Joi.string().alphanum().min(2).max(30).required(),
-  surname: Joi.string().alphanum().min(2).max(30).required(),
+  group: Joi.string().min(2).max(30).optional().allow(""),
+  name: Joi.string()
+    .min(2)
+    .max(30)
+    .optional()
+    .allow("")
+    .pattern(/^[a-zA-Zа-яА-Я]+$/)
+    .messages({
+      "string.pattern.base": "Just letters",
+    }),
+  surname: Joi.string()
+    .min(2)
+    .max(30)
+    .optional()
+    .allow("")
+    .pattern(/^[a-zA-Zа-яА-Я]+$/)
+    .messages({
+      "string.pattern.base": "Just letters",
+    }),
   email: Joi.string()
     .pattern(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)
-    .required()
+    .optional()
+    .allow("")
     .messages({
       "string.pattern.base": "Required format: name@domain.extension",
     }),
   phone: Joi.string()
     .pattern(/^0\d{9}$/)
-    .required()
+    .optional()
+    .allow("")
     .messages({
       "string.pattern.base": "Required format: 0XXXXXXXXX",
     }),
-  age: Joi.number().integer().min(13).max(70).required(),
-  sum: Joi.number().integer().min(1).max(100000).required(),
-  alreadyPaid: Joi.number().integer().min(1).max(100000).required(),
-  status: Joi.string().optional(),
-  course: Joi.string().optional(),
-  courseType: Joi.string().optional(),
-  courseFormat: Joi.string().optional(),
+  age: Joi.number().integer().min(13).max(70).optional().allow(""),
+  sum: Joi.number().integer().min(1).max(100000).optional().allow(""),
+  alreadyPaid: Joi.number().integer().min(1).max(100000).optional().allow(""),
+  status: Joi.string().optional().allow(""),
+  course: Joi.string().optional().allow(""),
+  courseType: Joi.string().optional().allow(""),
+  courseFormat: Joi.string().optional().allow(""),
 });
 export { orderValidator };
