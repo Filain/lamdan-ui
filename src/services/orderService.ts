@@ -63,7 +63,7 @@ const orderService = {
     return data;
   },
 
-  async update(id: string, dto: IOrder): Promise<IOrder> {
+  async update(id: string, dto: IOrderCreate): Promise<IOrder> {
     const { data } = await apiService.patch(urls.order.patch(id), dto);
     return data;
   },

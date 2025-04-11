@@ -102,15 +102,7 @@ export default function OrderComponent({ order, isDark }: IOrderProps) {
           {manager}
         </p>
       </div>
-      {details === _id && (
-        <div className="flex flex-row gap-2  h-min-20">
-          <div className="flex flex-col gap-2 w-1/2 ">
-            <p className="cursor-default">Massage:{msg}</p>
-            <p className="cursor-default ">UTM:{utm}</p>
-          </div>
-          <OrderCommentComponent order={order} />
-        </div>
-      )}
+      {details === _id && <OrderCommentComponent order={order} />}
     </>
   );
 }

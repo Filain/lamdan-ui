@@ -27,23 +27,23 @@ export default function OrderFormComponent({ order }: ICommentProps) {
   } = useForm<IOrderCreate>({
     resolver: joiResolver(orderValidator),
     defaultValues: {
-      group: order?.group || "",
-      name: order?.name || "",
-      surname: order?.surname || "",
-      email: order?.email || "",
-      phone: order?.phone || "",
+      group: order?.group,
+      name: order?.name,
+      surname: order?.surname,
+      email: order?.email,
+      phone: order?.phone,
       age: order?.age,
-      status: order?.status || "",
+      status: order?.status,
       sum: order?.sum,
       already_paid: order?.already_paid,
-      course: order?.course || "",
-      course_format: order?.course_format || "",
-      course_type: order?.course_type || "",
+      course: order?.course,
+      course_format: order?.course_format,
+      course_type: order?.course_type,
     },
   });
 
   const { mutate } = useMutation({
-    mutationFn: (data: IOrderCreate) => orderService.create(data),
+    mutationFn: (data: IOrderCreate) => orderService.update(order?._id ?? "", data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
       setModal(null);

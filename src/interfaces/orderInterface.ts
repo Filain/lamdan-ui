@@ -15,11 +15,11 @@ export interface IFormData {
 
 export interface IOrderCreate {
   group: string | null;
-  name: string;
-  surname: string;
-  email: string;
-  phone: string;
-  age: number;
+  name: string | null;
+  surname: string | null;
+  email: string | null;
+  phone: string | null;
+  age: number | null;
   status: string | null;
   sum: number | null;
   course: string | null;
