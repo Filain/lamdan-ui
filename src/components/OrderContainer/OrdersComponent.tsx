@@ -91,7 +91,7 @@ export default function OrdersComponent() {
     // Створення нових параметрів запиту
     const newParams = new URLSearchParams(searchParams.toString());
     newParams.set("sort", newSort);
-    newParams.set("page", page);
+    newParams.set("page", "1");
 
     // Оновлення URL
     router.push(`?${newParams.toString()}`);
