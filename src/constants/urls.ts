@@ -23,6 +23,7 @@ const urls = {
   },
   group: {
     getAll: "/group",
+    post: "/group",
   },
 };
 

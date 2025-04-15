@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent, FocusEvent, forwardRef, Ref, useEffect, useState } from "react";
 
 import Button from "@/components/ui/Button";
@@ -19,71 +19,107 @@ interface InputProps {
   onBlur?: (e: FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
-const InputGroup = forwardRef<HTMLInputElement | HTMLSelectElement, InputProps>(({ label, name, value, onChange, onBlur }, ref) => {
-  const [isSelect, setIsSelect] = useState(false);
-  const [inputValue, setInputValue] = useState(value ?? ""); // локальний стан значення
-  const { data } = useQuery({ queryKey: ["group"], queryFn: () => groupService.getAll() });
-  const groupOptions = data?.reduce<ISelectOption[]>((acc, { _id: value, group: label }) => {
-    acc.push({ value, label });
-    return acc;
-  }, []);
+const InputGroup = forwardRef<HTMLInputElement | HTMLSelectElement, InputProps>(
+  ({ label, name, value: externalValue, onChange, onBlur }, ref) => {
+    const [isAdding, setIsAdding] = useState(false); // Стан для відстеження процесу додавання
+    const [inputValue, setInputValue] = useState(externalValue ?? ""); // Локальний стан значення input
+    const queryClient = useQueryClient();
+    const { data } = useQuery({ queryKey: ["group"], queryFn: () => groupService.getAll() });
+    const groupOptions = data?.reduce<ISelectOption[]>((acc, { _id: value, group: label }) => {
+      acc.push({ value, label });
+      return acc;
+    }, []);
 
-  useEffect(() => {
-    setInputValue(value ?? ""); // оновлення локального значення при зміні зовнішнього
-  }, [value]);
+    const { mutate } = useMutation({
+      mutationFn: (data: { group: string }) => groupService.post(data),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["group"] });
+        setIsAdding(false); // Завершуємо процес додавання після успішної мутації
+        setInputValue(""); // Очищаємо поле після успішного додавання
+        onChange?.({ target: { name, value: "" } } as ChangeEvent<HTMLInputElement>); // Оновлюємо зовнішній стан
+      },
+    });
 
-  const handleAdd = () => {
-    setIsSelect(false);
-    setInputValue(""); // очищаємо локальне значення
-    onChange?.({ target: { name, value: "" } } as ChangeEvent<HTMLInputElement>); // повідомляємо батьківський компонент
-    console.log("handleAdd");
-  };
+    useEffect(() => {
+      setInputValue(externalValue ?? ""); // Оновлення локального значення при зміні зовнішнього значення
+    }, [externalValue]);
 
-  return (
-    <div className="flex flex-col flex-1">
-      {label && <label htmlFor={name}>{label}</label>}
+    const handleAdd = () => {
+      if (isAdding) {
+        // Якщо вже натиснуто "add" і є значення, виконуємо мутацію
+        if (inputValue.trim()) {
+          mutate({ group: inputValue });
+        }
+      } else {
+        // Перше натискання "add" - змінюємо input на text
+        setIsAdding(true);
+      }
+    };
 
-      {isSelect ? (
-        <select
-          name={name}
-          ref={ref as Ref<HTMLSelectElement>}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          className="border p-2 rounded w-full h-10 bg-gray-100 border-none
+    // Функція для обробки зміни в input
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setInputValue(e.target.value);
+      onChange?.(e); // Передаємо зміну у зовнішній обробник, якщо він є
+    };
+
+    // Функція для скасування редагування та повернення до select
+    const handleCancel = () => {
+      setIsAdding(false);
+      setInputValue(externalValue ?? ""); // Повертаємо попереднє значення
+    };
+
+    return (
+      <div className="flex flex-col flex-1">
+        {label && <label htmlFor={name}>{label}</label>}
+
+        {isAdding ? (
+          <input
+            type="text"
+            name={name}
+            ref={ref as Ref<HTMLInputElement>}
+            value={inputValue}
+            onChange={handleInputChange} // Використовуємо локальний обробник змін
+            onBlur={onBlur}
+            placeholder={label}
+            className="border p-2 rounded w-full h-10 bg-gray-100 border-none focus:outline-green-500"
+          />
+        ) : (
+          <select
+            name={name}
+            ref={ref as Ref<HTMLSelectElement>}
+            value={externalValue}
+            onChange={onChange}
+            onBlur={onBlur}
+            className="border p-2 rounded w-full h-10 bg-gray-100 border-none
               focus:outline-green-500 pr-10 focus:bg-gray-100 focus:ring-green-500"
-        >
-          <option value="">Select...</option>
-          {groupOptions?.map(({ value, label }) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
-      ) : (
-        <input
-          type="text"
-          name={name}
-          ref={ref as Ref<HTMLInputElement>}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          placeholder={label}
-          className="border p-2 rounded w-full h-10 bg-gray-100 border-none focus:outline-green-500"
-        />
-      )}
+          >
+            <option value="">Select...</option>
+            {groupOptions?.map(({ value, label }) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+        )}
 
-      <div className="flex flex-row justify-between gap-2">
-        <Button className="h-6 text-sm p-0 w-full" type="button" onClick={() => handleAdd()}>
-          input
-        </Button>
-        <Button className="h-6 text-sm p-0 w-full" type="button" onClick={() => setIsSelect(true)}>
-          select
-        </Button>
+        <div className="flex flex-row justify-between gap-2">
+          <Button className="h-6 text-sm p-0 w-full" type="button" onClick={handleAdd}>
+            {isAdding ? "Save" : "Add"} {/* Змінюємо текст кнопки */}
+          </Button>
+          {isAdding ? (
+            <Button className="h-6 text-sm p-0 w-full" type="button" onClick={handleCancel}>
+              Cancel
+            </Button>
+          ) : (
+            <Button className="h-6 text-sm p-0 w-full" type="button" onClick={() => setIsAdding(true)}>
+              Edit
+            </Button>
+          )}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
 
 InputGroup.displayName = "InputGroup";
 
