@@ -1,8 +1,8 @@
 import { urls } from "@/constants/urls";
 import { IOrderCreate } from "@/interfaces/orderInterface";
 import { apiService } from "@/services/apiService";
-import { IGroup } from "@/services/groupService";
 import { IUser } from "@/services/authService";
+import { IGroup } from "@/services/groupService";
 
 export interface IOrderResponseData {
   data: IOrder[];
@@ -27,7 +27,7 @@ export interface IOrder {
   created_at: string;
   utm: string;
   msg: string | null;
-  status: string | null;
+  status: string;
 }
 
 export interface IOrderQuery {

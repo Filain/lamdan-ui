@@ -8,7 +8,7 @@ import InputGroup from "@/components/ui/form/InputGroup";
 import InputNumber from "@/components/ui/form/InputNumber";
 import { InputSelect } from "@/components/ui/form/InputSelect";
 import InputText from "@/components/ui/form/InputText";
-import { Course, CourseFormat, CourseType, Status } from "@/constants/enums";
+import { Course, CourseFormat, CourseType, Statuses } from "@/constants/enums";
 import { IFormData, IOrderCreate } from "@/interfaces/orderInterface";
 import { IOrder, orderService } from "@/services/orderService";
 import { useModalStore } from "@/store/useModalStore";
@@ -35,7 +35,7 @@ export default function OrderFormComponent({ order }: ICommentProps) {
       email: order?.email,
       phone: order?.phone,
       age: order?.age ?? undefined,
-      status: order?.status ?? "",
+      status: order?.status,
       sum: order?.sum ?? undefined,
       already_paid: order?.already_paid ?? undefined,
       course: order?.course,
@@ -82,7 +82,7 @@ export default function OrderFormComponent({ order }: ICommentProps) {
             <p className="text-red-500 text-sm h-4">{errors.age?.message ? String(errors.age?.message) : ""}</p>
           </div>
           <div className="w-1/2 ">
-            <InputSelect {...register("status")} name="status" label="Status" options={Status} />
+            <InputSelect {...register("status")} name="status" label="Status" options={Statuses} />
             <p className="text-red-500 text-sm h-[40px]">{errors.status?.message ? String(errors.status?.message) : ""}</p>
             <InputNumber {...register("sum")} label="Sum" />
             <p className="text-red-500 text-sm h-4">{errors.sum?.message ? String(errors.sum?.message) : ""}</p>

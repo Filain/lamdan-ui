@@ -1,4 +1,4 @@
-export enum Status {
+export enum Statuses {
   IN_WORK = "In work",
   NEW = "New",
   AGGRE = "Aggre",

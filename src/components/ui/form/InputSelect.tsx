@@ -1,12 +1,12 @@
 "use client";
-import { forwardRef } from "react";
+import { ChangeEventHandler, FocusEventHandler, forwardRef } from "react";
 
 interface InputSelectProps {
   label?: string;
   name: string;
   options: Record<string, string>;
-  onChange: React.ChangeEventHandler<HTMLSelectElement>;
-  onBlur: React.FocusEventHandler<HTMLSelectElement>;
+  onChange: ChangeEventHandler<HTMLSelectElement>;
+  onBlur: FocusEventHandler<HTMLSelectElement>;
 }
 
 export const InputSelect = forwardRef<HTMLSelectElement, InputSelectProps>(({ onChange, onBlur, name, label, options }, ref) => {
@@ -26,7 +26,7 @@ export const InputSelect = forwardRef<HTMLSelectElement, InputSelectProps>(({ on
         </option>
         {/* Додаємо пустий варіант */}
         {Object.entries(options).map(([value, display]) => (
-          <option key={value} value={value} className="hover:bg-gray-200 focus:bg-gray-200">
+          <option key={value} value={display} className="hover:bg-gray-200 focus:bg-gray-200">
             {display}
           </option>
         ))}

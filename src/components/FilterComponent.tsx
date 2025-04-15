@@ -9,7 +9,7 @@ import InputNumber from "@/components/ui/form/InputNumber";
 import { InputSelect } from "@/components/ui/form/InputSelect";
 import InputText from "@/components/ui/form/InputText";
 import Icons from "@/components/ui/Icons";
-import { Course, CourseFormat, CourseType, Status } from "@/constants/enums";
+import { Course, CourseFormat, CourseType, Statuses } from "@/constants/enums";
 import { exelService } from "@/services/exelService";
 
 export default function FilterComponent() {
@@ -89,7 +89,7 @@ export default function FilterComponent() {
           <InputNumber {...register("age")} label="Age" />
         </div>
         <div className="flex gap-2 px-2">
-          <InputSelect {...register("status")} name="status" label="Status" options={Status} />
+          <InputSelect {...register("status")} name="status" label="Status" options={Statuses} />
           <InputNumber {...register("sum")} label="Sum" />
           <InputNumber {...register("alreadyPaid")} label="Already paid" />
           <InputSelect {...register("course")} name="course" label="Course" options={Course} />
