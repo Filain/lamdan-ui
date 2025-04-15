@@ -1,9 +1,15 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, FocusEvent, forwardRef, Ref, useState } from "react";
 
 import Button from "@/components/ui/Button";
-import { Course } from "@/constants/enums";
+import { groupService } from "@/services/groupService";
+
+export interface ISelectOption {
+  value: string;
+  label: string;
+}
 
 interface InputProps {
   label?: string;
@@ -15,6 +21,11 @@ interface InputProps {
 
 const InputGroup = forwardRef<HTMLInputElement | HTMLSelectElement, InputProps>(({ label, name, value, onChange, onBlur }, ref) => {
   const [isSelect, setIsSelect] = useState(false);
+  const { data } = useQuery({ queryKey: ["group"], queryFn: () => groupService.getAll() });
+  const groupOptions = data?.reduce<ISelectOption[]>((acc, { _id: value, group: label }) => {
+    acc.push({ value, label });
+    return acc;
+  }, []);
 
   return (
     <div className="flex flex-col flex-1">
@@ -31,9 +42,9 @@ const InputGroup = forwardRef<HTMLInputElement | HTMLSelectElement, InputProps>(
               focus:outline-green-500 pr-10 focus:bg-gray-100 focus:ring-green-500"
         >
           <option value="">Select...</option>
-          {Object.entries(Course).map(([val, text]) => (
-            <option key={val} value={val}>
-              {text}
+          {groupOptions?.map(({ value, label }) => (
+            <option key={value} value={value}>
+              {label}
             </option>
           ))}
         </select>

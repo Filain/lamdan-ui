@@ -21,6 +21,9 @@ const urls = {
     getAll: (id: string) => `/comment/${id}`,
     post: (id: string) => `/comment/${id}`,
   },
+  group: {
+    getAll: "/group",
+  },
 };
 
 export { baseURL, urls };

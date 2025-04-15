@@ -17,7 +17,7 @@ export default function HeaderComponent() {
   return (
     <header className="flex justify-between items-center h-16 bg-green-200">
       <p className="ml-5 text-4xl font-bold text-green-800 drop-shadow-xl">Logo</p>
-      <div className="">
+      <div className=" flex flex-row">
         <Button className="mr-5" icon={true}>
           <Icons name="user" className=" w-10 h-10 fill-transparent stroke-white  stroke-1" />
         </Button>
