@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
+import InputGroup from "@/components/ui/form/InputGroup";
 import InputNumber from "@/components/ui/form/InputNumber";
 import { InputSelect } from "@/components/ui/form/InputSelect";
 import InputText from "@/components/ui/form/InputText";
@@ -12,7 +13,6 @@ import { IFormData, IOrderCreate } from "@/interfaces/orderInterface";
 import { IOrder, orderService } from "@/services/orderService";
 import { useModalStore } from "@/store/useModalStore";
 import { orderValidator } from "@/validators/orderValidator";
-import InputGroup from "@/components/ui/form/InputGroup";
 
 interface ICommentProps {
   order?: IOrder;
@@ -29,7 +29,7 @@ export default function OrderFormComponent({ order }: ICommentProps) {
   } = useForm<IFormData>({
     resolver: joiResolver(orderValidator),
     defaultValues: {
-      group: order?.group ?? "",
+      group: typeof order?.group === "object" && order.group !== null ? order.group._id : (order?.group ?? ""),
       name: order?.name,
       surname: order?.surname,
       email: order?.email,

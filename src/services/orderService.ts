@@ -1,6 +1,7 @@
 import { urls } from "@/constants/urls";
 import { IOrderCreate } from "@/interfaces/orderInterface";
 import { apiService } from "@/services/apiService";
+import { IGroup } from "@/services/groupService";
 
 export interface IOrderResponseData {
   data: IOrder[];
@@ -9,7 +10,7 @@ export interface IOrderResponseData {
 
 export interface IOrder {
   manager: string | null;
-  group: string | null;
+  group: IGroup | null;
   comment: string[];
   _id: string;
   name: string;

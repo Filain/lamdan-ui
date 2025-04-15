@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ChangeEvent, FocusEvent, forwardRef, Ref, useState } from "react";
+import { ChangeEvent, FocusEvent, forwardRef, Ref, useEffect, useState } from "react";
 
 import Button from "@/components/ui/Button";
 import { groupService } from "@/services/groupService";
@@ -21,11 +21,23 @@ interface InputProps {
 
 const InputGroup = forwardRef<HTMLInputElement | HTMLSelectElement, InputProps>(({ label, name, value, onChange, onBlur }, ref) => {
   const [isSelect, setIsSelect] = useState(false);
+  const [inputValue, setInputValue] = useState(value ?? ""); // локальний стан значення
   const { data } = useQuery({ queryKey: ["group"], queryFn: () => groupService.getAll() });
   const groupOptions = data?.reduce<ISelectOption[]>((acc, { _id: value, group: label }) => {
     acc.push({ value, label });
     return acc;
   }, []);
+
+  useEffect(() => {
+    setInputValue(value ?? ""); // оновлення локального значення при зміні зовнішнього
+  }, [value]);
+
+  const handleAdd = () => {
+    setIsSelect(false);
+    setInputValue(""); // очищаємо локальне значення
+    onChange?.({ target: { name, value: "" } } as ChangeEvent<HTMLInputElement>); // повідомляємо батьківський компонент
+    console.log("handleAdd");
+  };
 
   return (
     <div className="flex flex-col flex-1">
@@ -62,7 +74,7 @@ const InputGroup = forwardRef<HTMLInputElement | HTMLSelectElement, InputProps>(
       )}
 
       <div className="flex flex-row justify-between gap-2">
-        <Button className="h-6 text-sm p-0 w-full" type="button" onClick={() => setIsSelect(false)}>
+        <Button className="h-6 text-sm p-0 w-full" type="button" onClick={() => handleAdd()}>
           input
         </Button>
         <Button className="h-6 text-sm p-0 w-full" type="button" onClick={() => setIsSelect(true)}>
