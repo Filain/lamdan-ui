@@ -15,8 +15,8 @@ export default function Button({ icon = false, onClick, disabled, className, typ
       onClick={onClick}
       disabled={disabled}
       type={type}
-      className={`w-fit ${className} text-lg  ${icon ? "px-1 py-1" : "px-6 py-2"} bg-green-800 text-white rounded-lg 
-   transition-all duration-200 active:scale-85 hover:bg-green-700 hover:scale-105 cursor-pointer`}
+      className={`w-fit ${className} text-lg flex items-center justify-center ${icon ? "px-1 py-1" : "px-6 py-2"} bg-green-800 
+      text-white rounded-lg transition-all duration-200 active:scale-85 hover:bg-green-700 hover:scale-105 cursor-pointer`}
     >
       {children}
     </button>

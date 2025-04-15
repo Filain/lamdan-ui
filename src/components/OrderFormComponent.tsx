@@ -4,13 +4,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
+import InputNumber from "@/components/ui/form/InputNumber";
 import { InputSelect } from "@/components/ui/form/InputSelect";
 import InputText from "@/components/ui/form/InputText";
 import { Course, CourseFormat, CourseType, Status } from "@/constants/enums";
-import { IOrderCreate } from "@/interfaces/orderInterface";
+import { IFormData, IOrderCreate } from "@/interfaces/orderInterface";
 import { IOrder, orderService } from "@/services/orderService";
 import { useModalStore } from "@/store/useModalStore";
 import { orderValidator } from "@/validators/orderValidator";
+import InputGroup from "@/components/ui/form/InputGroup";
 
 interface ICommentProps {
   order?: IOrder;
@@ -24,18 +26,18 @@ export default function OrderFormComponent({ order }: ICommentProps) {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IOrderCreate>({
+  } = useForm<IFormData>({
     resolver: joiResolver(orderValidator),
     defaultValues: {
-      group: order?.group,
+      group: order?.group ?? "",
       name: order?.name,
       surname: order?.surname,
       email: order?.email,
       phone: order?.phone,
-      age: order?.age,
-      status: order?.status,
-      sum: order?.sum,
-      already_paid: order?.already_paid,
+      age: order?.age ?? undefined,
+      status: order?.status ?? "",
+      sum: order?.sum ?? undefined,
+      already_paid: order?.already_paid ?? undefined,
       course: order?.course,
       course_format: order?.course_format,
       course_type: order?.course_type,
@@ -56,12 +58,17 @@ export default function OrderFormComponent({ order }: ICommentProps) {
     reset();
   };
 
+  const submit = (data: IOrderCreate) => {
+    console.log(data);
+    mutate(data);
+  };
+
   return (
     <>
-      <form onSubmit={handleSubmit((data) => mutate(data))} className="border-2 border-green-800 rounded-xl  p-4 w-[700px]">
+      <form onSubmit={handleSubmit((data) => submit(data))} className="border-2 border-green-800 rounded-xl  p-4 w-[700px]">
         <div className="flex gap-6 ">
           <div className="w-1/2">
-            <InputText {...register("group")} label="Group" />
+            <InputGroup {...register("group")} label="Group" />
             <p className="text-red-500 text-sm h-4">{errors.group?.message ? String(errors.group?.message) : ""}</p>
             <InputText {...register("name")} label="Name" />
             <p className="text-red-500 text-sm h-4">{errors.name?.message ? String(errors.name?.message) : ""}</p>
@@ -71,15 +78,15 @@ export default function OrderFormComponent({ order }: ICommentProps) {
             <p className="text-red-500 text-sm h-4">{errors.email?.message ? String(errors.email?.message) : ""}</p>
             <InputText {...register("phone")} label="Phone" />
             <p className="text-red-500 text-sm h-4">{errors.phone?.message ? String(errors.phone?.message) : ""}</p>
-            <InputText {...register("age")} label="Age" />
+            <InputNumber {...register("age")} label="Age" />
             <p className="text-red-500 text-sm h-4">{errors.age?.message ? String(errors.age?.message) : ""}</p>
           </div>
           <div className="w-1/2 ">
             <InputSelect {...register("status")} name="status" label="Status" options={Status} />
-            <p className="text-red-500 text-sm h-4">{errors.status?.message ? String(errors.status?.message) : ""}</p>
-            <InputText {...register("sum")} label="Sum" />
+            <p className="text-red-500 text-sm h-[40px]">{errors.status?.message ? String(errors.status?.message) : ""}</p>
+            <InputNumber {...register("sum")} label="Sum" />
             <p className="text-red-500 text-sm h-4">{errors.sum?.message ? String(errors.sum?.message) : ""}</p>
-            <InputText {...register("already_paid")} label="Already paid" />
+            <InputNumber {...register("already_paid")} label="Already paid" />
             <p className="text-red-500 text-sm h-4">{errors.already_paid?.message ? String(errors.already_paid?.message) : ""}</p>
             <InputSelect {...register("course")} name="course" label="Course" options={Course} />
             <p className="text-red-500 text-sm h-4">{errors.course?.message ? String(errors.course?.message) : ""}</p>

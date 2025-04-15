@@ -7,7 +7,7 @@ const orderValidator = Joi.object({
     .max(30)
     .optional()
     .allow("")
-    .pattern(/^[a-zA-Zа-яА-Я]+$/)
+    .pattern(/^[a-zA-Zа-яА-ЯёЁіІїЇєЄґҐ]+$/u)
     .messages({
       "string.pattern.base": "Just letters",
     }),
@@ -16,7 +16,7 @@ const orderValidator = Joi.object({
     .max(30)
     .optional()
     .allow("")
-    .pattern(/^[a-zA-Zа-яА-Я]+$/)
+    .pattern(/^[a-zA-Zа-яА-ЯёЁіІїЇєЄґҐ]+$/u)
     .messages({
       "string.pattern.base": "Just letters",
     }),
@@ -34,9 +34,9 @@ const orderValidator = Joi.object({
     .messages({
       "string.pattern.base": "Required format: 0XXXXXXXXX",
     }),
-  age: Joi.number().integer().min(13).max(70).optional().allow(""),
-  sum: Joi.number().integer().min(1).max(100000).optional().allow(""),
-  already_paid: Joi.number().integer().min(1).max(100000).optional().allow(""),
+  age: Joi.number().min(13).max(71).allow(null, "", 0),
+  sum: Joi.number().allow(null, ""),
+  already_paid: Joi.number().allow(null, ""),
   status: Joi.string().optional().allow(""),
   course: Joi.string().optional().allow(""),
   course_type: Joi.string().optional().allow(""),
