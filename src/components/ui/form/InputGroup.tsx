@@ -45,6 +45,8 @@ const InputGroup = forwardRef<HTMLInputElement | HTMLSelectElement, InputProps>(
     }, [externalValue]);
 
     const handleAdd = () => {
+      setInputValue("");
+      onChange?.({ target: { name, value: "" } } as ChangeEvent<HTMLInputElement>); // очищаємо зовнішнє значення
       if (isAdding) {
         // Якщо вже натиснуто "add" і є значення, виконуємо мутацію
         if (inputValue.trim()) {
@@ -62,12 +64,6 @@ const InputGroup = forwardRef<HTMLInputElement | HTMLSelectElement, InputProps>(
       onChange?.(e); // Передаємо зміну у зовнішній обробник, якщо він є
     };
 
-    // Функція для скасування редагування та повернення до select
-    const handleCancel = () => {
-      setIsAdding(false);
-      setInputValue(externalValue ?? ""); // Повертаємо попереднє значення
-    };
-
     return (
       <div className="flex flex-col flex-1">
         {label && <label htmlFor={name}>{label}</label>}
@@ -80,7 +76,7 @@ const InputGroup = forwardRef<HTMLInputElement | HTMLSelectElement, InputProps>(
             value={inputValue}
             onChange={handleInputChange} // Використовуємо локальний обробник змін
             onBlur={onBlur}
-            placeholder={label}
+            placeholder={"Enter new group"}
             className="border p-2 rounded w-full h-10 bg-gray-100 border-none focus:outline-green-500"
           />
         ) : (
@@ -106,15 +102,10 @@ const InputGroup = forwardRef<HTMLInputElement | HTMLSelectElement, InputProps>(
           <Button className="h-6 text-sm p-0 w-full" type="button" onClick={handleAdd}>
             {isAdding ? "Save" : "Add"} {/* Змінюємо текст кнопки */}
           </Button>
-          {isAdding ? (
-            <Button className="h-6 text-sm p-0 w-full" type="button" onClick={handleCancel}>
-              Cancel
-            </Button>
-          ) : (
-            <Button className="h-6 text-sm p-0 w-full" type="button" onClick={() => setIsAdding(true)}>
-              Edit
-            </Button>
-          )}
+
+          <Button className="h-6 text-sm p-0 w-full" type="button" onClick={() => setIsAdding(false)}>
+            Select
+          </Button>
         </div>
       </div>
     );
