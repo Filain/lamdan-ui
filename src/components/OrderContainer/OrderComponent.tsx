@@ -98,8 +98,8 @@ export default function OrderComponent({ order, isDark }: IOrderProps) {
         <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap   text-center" title={group?.group?.toString() ?? ""}>
           {group?.group}
         </p>
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap   text-center" title={manager?.toString() ?? ""}>
-          {manager}
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap   text-center" title={manager?.name ?? ""}>
+          {manager?.name}
         </p>
       </div>
       {details === _id && <OrderCommentComponent order={order} />}

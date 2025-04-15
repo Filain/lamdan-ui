@@ -2,6 +2,7 @@ import { urls } from "@/constants/urls";
 import { IOrderCreate } from "@/interfaces/orderInterface";
 import { apiService } from "@/services/apiService";
 import { IGroup } from "@/services/groupService";
+import { IUser } from "@/services/authService";
 
 export interface IOrderResponseData {
   data: IOrder[];
@@ -9,7 +10,7 @@ export interface IOrderResponseData {
 }
 
 export interface IOrder {
-  manager: string | null;
+  manager: IUser | null;
   group: IGroup | null;
   comment: string[];
   _id: string;

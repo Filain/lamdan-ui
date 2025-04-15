@@ -28,7 +28,7 @@ const orderValidator = Joi.object({
       "string.pattern.base": "Required format: name@domain.extension",
     }),
   phone: Joi.string()
-    .pattern(/^0\d{9}$/)
+    .pattern(/^(0\d{9}|8\(\d{3}\)\s\d{3}-\d)$/)
     .optional()
     .allow("")
     .messages({

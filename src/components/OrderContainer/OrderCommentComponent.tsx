@@ -11,6 +11,7 @@ import Modal from "@/components/ui/Modal";
 import { commentService } from "@/services/commentService";
 import { IOrder } from "@/services/orderService";
 import { useModalStore } from "@/store/useModalStore";
+import { useUserStore } from "@/store/useUserStore";
 
 interface ICommentProps {
   order: IOrder;
@@ -22,6 +23,8 @@ interface IFormData {
 export default function OrderCommentComponent({ order }: ICommentProps) {
   const queryClient = useQueryClient();
   const { modal, setModal } = useModalStore();
+  const { user } = useUserStore();
+
   const { reset, register, handleSubmit } = useForm<IFormData>();
   const { data, isPending: isLoading } = useQuery({ queryKey: ["comments", order._id], queryFn: () => commentService.getAll(order._id) });
   const { mutate, isPending } = useMutation({
@@ -35,6 +38,16 @@ export default function OrderCommentComponent({ order }: ICommentProps) {
   const sendComment = (data: IFormData) => {
     mutate({ comment: data.comment });
     reset();
+  };
+
+  const handleModal = () => {
+    // console.log("order manager", order.manager);
+    // console.log("me", user?.name);
+    if (order.manager === user?.name || order.manager === null) {
+      setModal(order);
+    } else {
+      alert("This request belongs to another user.");
+    }
   };
 
   return (
@@ -81,7 +94,7 @@ export default function OrderCommentComponent({ order }: ICommentProps) {
           </form>
         </div>
         <div className="flex flex-col justify-center pr-4">
-          <Button className="h-10" onClick={() => setModal(order)}>
+          <Button className="h-10" onClick={handleModal}>
             Edit
           </Button>
         </div>
