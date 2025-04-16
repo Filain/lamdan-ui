@@ -64,15 +64,17 @@ export default function LoginComponent() {
   };
 
   return (
-    <div className=" h-[calc(100vh-150px)] flex items-center justify-center ">
-      <form onSubmit={handleSubmit(formSubmit)} className="flex flex-col border-2 border-green-800 rounded-xl w-[400px] p-4">
+    <div className=" h-[calc(100vh-250px)] flex items-center justify-center ">
+      <form onSubmit={handleSubmit(formSubmit)} className="flex flex-col border-2 border-green-800 rounded-xl w-[300px] p-4">
         <InputText {...register("email")} label={"Email"} />
         <p className="text-red-500 text-sm h-4">{errors.email?.message ? String(errors.email?.message) : ""}</p>
         <InputPassword {...register("password")} label={"Password"} />
         <p className="text-red-500 text-sm h-4">{errors.password?.message ? String(errors.password?.message) : ""}</p>
-        <Button type="submit" className="mt-4 p-2 ">
-          Login
-        </Button>
+        <div className="flex flex-row justify-center ">
+          <Button type="submit" className="mt-4 p-2 ">
+            Login
+          </Button>
+        </div>
         {errorMessage ? <p className="text-red-500 text-sm h-4 text-center">{errorMessage}</p> : <p className="h-4"></p>}
       </form>
     </div>

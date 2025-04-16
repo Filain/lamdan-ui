@@ -25,6 +25,12 @@ const urls = {
     getAll: "/group",
     post: "/group",
   },
+
+  admin: {
+    getAll: "/admin",
+    static: "/admin/statistics",
+    create: "/admin/create",
+  },
 };
 
 export { baseURL, urls };

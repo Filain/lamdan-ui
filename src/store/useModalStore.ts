@@ -1,14 +1,12 @@
 import { create } from "zustand";
 
-import { IOrder } from "@/services/orderService";
-
 interface IModalState {
-  modal: IOrder | null;
-  setModal: (modal: IOrder | null) => void;
+  modal: boolean;
+  setModal: (modal: boolean) => void;
 }
 
 export const useModalStore = create<IModalState>((set) => ({
-  modal: null,
+  modal: false,
 
   setModal: (modal) => set({ modal }),
 }));

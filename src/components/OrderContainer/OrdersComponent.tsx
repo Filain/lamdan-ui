@@ -6,10 +6,10 @@ import { useEffect } from "react";
 import Loading from "@/app/loading";
 import OrderComponent from "@/components/OrderContainer/OrderComponent";
 import { orderService } from "@/services/orderService";
-import { useOrderStore } from "@/store/useOrderStore";
+import { usePaginationStore } from "@/store/usePaginationStore";
 
 export default function OrdersComponent() {
-  const { setTotal } = useOrderStore();
+  const { setTotal } = usePaginationStore();
 
   const searchParams = useSearchParams();
   const currentSort = searchParams.get("sort") || "id";

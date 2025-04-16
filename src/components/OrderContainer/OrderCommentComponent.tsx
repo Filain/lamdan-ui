@@ -45,9 +45,9 @@ export default function OrderCommentComponent({ order }: ICommentProps) {
     console.log("me", user?._id);
 
     if (order.manager?._id === user?._id || order.manager === null) {
-      setModal(order);
+      setModal(true);
     } else {
-      alert("This request belongs to another user.");
+      alert("This order belongs to another user.");
     }
   };
 
@@ -99,7 +99,7 @@ export default function OrderCommentComponent({ order }: ICommentProps) {
             Edit
           </Button>
         </div>
-        <Modal onClose={() => setModal(null)} isOpen={!!modal}>
+        <Modal onClose={() => setModal(false)} isOpen={modal}>
           <OrderFormComponent order={order} />
         </Modal>
       </div>{" "}

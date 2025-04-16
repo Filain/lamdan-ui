@@ -48,18 +48,17 @@ export default function OrderFormComponent({ order }: ICommentProps) {
     mutationFn: (data: IOrderCreate) => orderService.update(order?._id ?? "", data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
-      setModal(null);
+      setModal(false);
       reset();
     },
   });
 
   const closeModal = () => {
-    setModal(null);
+    setModal(false);
     reset();
   };
 
   const submit = (data: IOrderCreate) => {
-    console.log(data);
     mutate(data);
   };
 

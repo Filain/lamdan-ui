@@ -1,3 +1,4 @@
+import HeaderComponent from "@/components/HeaderComponent";
 import AuthUserRequired from "@/hok/AuthUserRequired";
 
 export default function MainLayout({
@@ -7,6 +8,7 @@ export default function MainLayout({
 }>) {
   return (
     <main className="borer-">
+      <HeaderComponent />
       <AuthUserRequired>{children}</AuthUserRequired>
     </main>
   );

@@ -5,6 +5,7 @@ export default function Home() {
     <div className="flex flex-col gap-4">
       <Link href="/login">Login</Link>
       <Link href="/main">Main</Link>
+      <Link href="/admin">Admin</Link>
     </div>
   );
 }

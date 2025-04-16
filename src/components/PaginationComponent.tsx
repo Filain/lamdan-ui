@@ -1,12 +1,12 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { useOrderStore } from "@/store/useOrderStore";
+import { usePaginationStore } from "@/store/usePaginationStore";
 
 export default function PaginationComponent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { total } = useOrderStore();
+  const { total } = usePaginationStore();
 
   const page = parseInt(searchParams.get("page") || "1");
   const goToPage = (pageNumber: number) => {
