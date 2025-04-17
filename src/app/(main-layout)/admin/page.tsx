@@ -9,7 +9,6 @@ export default function Main() {
       <StatisticComponent />
       <CreateUserComponent />
       <UsersComponent />
-      <p>fds;lskdfgslkdfjgsdflk</p>
       <PaginationComponent />
     </>
   );

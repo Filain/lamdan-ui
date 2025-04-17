@@ -27,6 +27,5 @@ export default function UsersComponent() {
   if (isLoading) {
     return <Loading />;
   }
-  console.log("data", data);
-  return <>{data?.data.map((user) => <UserComponent key={user._id} user={user} />)}</>;
+  return <div className="flex flex-col items-center">{data?.data.map((user) => <UserComponent key={user._id} user={user} />)}</div>;
 }

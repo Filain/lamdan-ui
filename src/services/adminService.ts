@@ -34,6 +34,18 @@ const adminService = {
     const { data } = await apiService.post(urls.admin.create, dto);
     return data;
   },
+  async ban(id: string): Promise<IUser> {
+    const { data } = await apiService.patch(urls.admin.ban(id));
+    return data;
+  },
+  async unban(id: string): Promise<IUser> {
+    const { data } = await apiService.patch(urls.admin.unban(id));
+    return data;
+  },
+  async getActivationToken(id: string): Promise<boolean> {
+    const { data } = await apiService.get(urls.admin.getActivationToken(id));
+    return data;
+  },
 };
 
 export { adminService };
