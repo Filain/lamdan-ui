@@ -1,9 +1,11 @@
 "use client";
 import { joiResolver } from "@hookform/resolvers/joi";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
 import InputPassword from "@/components/ui/form/InputPassword";
+import { adminService } from "@/services/adminService";
 import { passwordValidator } from "@/validators/passwordValidator";
 
 interface IPassword {
@@ -11,7 +13,11 @@ interface IPassword {
   confirm_password: string;
 }
 
-export default function PasswordActivateComponent() {
+interface IProps {
+  token: string;
+}
+
+export default function PasswordActivateComponent({ token }: IProps) {
   const {
     register,
     handleSubmit,
@@ -19,12 +25,17 @@ export default function PasswordActivateComponent() {
   } = useForm<IPassword>({
     resolver: joiResolver(passwordValidator),
   });
+
+  const { mutate } = useMutation({
+    mutationFn: (data: { token: string; password: string }) => adminService.changePassword(data.token, data.password),
+  });
+
   return (
-    <>
+    <div className=" h-[calc(100vh-250px)] flex items-center justify-center ">
       <form
         className="flex flex-col border-2 border-green-800 rounded-xl w-[300px] p-4 bg-white"
         onSubmit={handleSubmit((data) => {
-          console.log(data);
+          mutate({ token: token, password: data.password });
         })}
       >
         <InputPassword {...register("password")} label="Password" />
@@ -35,6 +46,6 @@ export default function PasswordActivateComponent() {
           <Button type="submit">Submit</Button>{" "}
         </div>
       </form>
-    </>
+    </div>
   );
 }

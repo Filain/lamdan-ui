@@ -17,6 +17,7 @@ export interface IUser {
   isBanned: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  lastLogin?: Date;
   __v?: number;
 }
 

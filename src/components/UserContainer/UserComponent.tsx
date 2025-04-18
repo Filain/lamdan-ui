@@ -10,7 +10,7 @@ interface IUserProps {
 }
 
 export default function UserComponent({ user }: IUserProps) {
-  const { name, surname, email, role, isBanned, isActive, createdAt } = user;
+  const { name, surname, email, role, isBanned, isActive, createdAt, lastLogin } = user;
   const queryClient = useQueryClient();
 
   const { mutate: ban } = useMutation({
@@ -25,6 +25,10 @@ export default function UserComponent({ user }: IUserProps) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },
+  });
+
+  const { mutate: activate } = useMutation({
+    mutationFn: (id: string) => adminService.getActivationToken(id),
   });
 
   return (
@@ -52,7 +56,7 @@ export default function UserComponent({ user }: IUserProps) {
           Created at: <span className="font-bold">{dayjs(createdAt).format("DD.MM.YYYY")}</span>
         </p>
         <p>
-          Last login: <span className="font-bold">{dayjs(createdAt).format("DD.MM.YYYY")}</span>
+          Last login: <span className="font-bold">{lastLogin ? dayjs(lastLogin).format("DD.MM.YYYY") : "-"}</span>
         </p>
       </div>
       <div className="w-1/4 flex flex-col items-center j">
@@ -64,13 +68,25 @@ export default function UserComponent({ user }: IUserProps) {
         </p>
       </div>
       <div className="w-1/4 flex flex-col items-center justify-evenly ">
-        {isActive ? <Button>RECOVERY PASSWORD</Button> : <Button>ACTIVATE</Button>}
-        <Button type="button" onClick={() => ban(user._id)}>
-          BAN
-        </Button>
-        <Button type="button" onClick={() => unban(user._id)}>
-          UNBAN
-        </Button>
+        {isActive ? (
+          <Button type="button" onClick={() => activate(user._id)}>
+            RECOVERY PASSWORD
+          </Button>
+        ) : (
+          <Button type="button" onClick={() => activate(user._id)}>
+            ACTIVATE
+          </Button>
+        )}
+
+        {isBanned ? (
+          <Button type="button" onClick={() => unban(user._id)}>
+            UNBAN
+          </Button>
+        ) : (
+          <Button type="button" onClick={() => ban(user._id)}>
+            BAN
+          </Button>
+        )}
       </div>
     </div>
   );

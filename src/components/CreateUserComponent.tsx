@@ -13,8 +13,7 @@ export default function CreateUserComponent() {
         CREATE USER
       </Button>
       <Modal isOpen={modal} onClose={() => setModal(false)}>
-        {" "}
-        <CreateUserFormComponent />{" "}
+        <CreateUserFormComponent />
       </Modal>
     </div>
   );

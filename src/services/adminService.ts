@@ -43,7 +43,12 @@ const adminService = {
     return data;
   },
   async getActivationToken(id: string): Promise<boolean> {
-    const { data } = await apiService.get(urls.admin.getActivationToken(id));
+    const { data } = await apiService.post(urls.admin.getActivationToken(id));
+    return data;
+  },
+  async changePassword(token: string, password: string): Promise<boolean> {
+    console.log("adminService.changePassword", token, password);
+    const { data } = await apiService.patch(urls.admin.changePassword, { token, password });
     return data;
   },
 };

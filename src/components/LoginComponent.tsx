@@ -65,7 +65,7 @@ export default function LoginComponent() {
 
   return (
     <div className=" h-[calc(100vh-250px)] flex items-center justify-center ">
-      <form onSubmit={handleSubmit(formSubmit)} className="flex flex-col border-2 border-green-800 rounded-xl w-[300px] p-4">
+      <form onSubmit={handleSubmit(formSubmit)} className="flex flex-col border-2 bg-white border-green-800 rounded-xl w-[300px] p-4">
         <InputText {...register("email")} label={"Email"} />
         <p className="text-red-500 text-sm h-4">{errors.email?.message ? String(errors.email?.message) : ""}</p>
         <InputPassword {...register("password")} label={"Password"} />
