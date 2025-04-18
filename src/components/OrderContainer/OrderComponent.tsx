@@ -68,7 +68,7 @@ export default function OrderComponent({ order, isDark }: IOrderProps) {
         <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap text-center" title={phone ?? ""}>
           {phone}
         </p>
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={age?.toString() ?? ""}>
+        <p className="w-1/24 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={age?.toString() ?? ""}>
           {age}
         </p>
         <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap  text-center" title={course ?? ""}>

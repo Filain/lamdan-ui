@@ -10,7 +10,8 @@ import { useUserStore } from "@/store/useUserStore";
 
 export default function AuthUserRequired({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const { user, setUser } = useUserStore();
+
+  const { user, setUser, logout } = useUserStore();
   const [loading, setLoading] = useState(true);
 
   useLayoutEffect(() => {
@@ -20,11 +21,13 @@ export default function AuthUserRequired({ children }: { children: React.ReactNo
         if (currentUser) {
           setUser(currentUser);
         } else {
-          router.push("/login");
+          router.replace("/login");
+          logout();
         }
       } catch (e: unknown) {
-        if (e instanceof AxiosError && e.response?.status === 401) {
-          router.push("/login");
+        if (e instanceof AxiosError && e.response?.status === 403) {
+          router.replace("/login");
+          logout();
         }
       } finally {
         setLoading(false);

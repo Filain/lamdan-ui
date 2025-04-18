@@ -10,7 +10,7 @@ interface IUserProps {
 }
 
 export default function UserComponent({ user }: IUserProps) {
-  const { name, surname, email, role, isBanned, isActive, createdAt, lastLogin } = user;
+  const { name, surname, email, role, isBanned, isActive, createdAt, lastLogin, inWork, total } = user;
   const queryClient = useQueryClient();
 
   const { mutate: ban } = useMutation({
@@ -32,39 +32,46 @@ export default function UserComponent({ user }: IUserProps) {
   });
 
   return (
-    <div className=" flex flex-row gap-4 border-2 border-green-800  m-2 p-4 rounded-3xl w-4xl ">
+    <div className=" flex flex-row gap-4 border-2 border-green-800  m-2 p-4 rounded-3xl w-full max-w-[1024px]">
       <div className="w-1/2 ">
-        <p>
-          Name: <span className="font-bold"> {name}</span>
-        </p>
-        <p>
-          surname: <span className="font-bold">{surname}</span>
-        </p>
+        <div className="flex flex-row gap-4">
+          <p>
+            Name: <span className="font-bold"> {name}</span>
+          </p>
+          <p>
+            Surname: <span className="font-bold">{surname}</span>
+          </p>
+        </div>
+
         <p>
           Email: <span className="font-bold">{email}</span>
         </p>
         <p>
           Role: <span className="font-bold">{role}</span>
         </p>
-        <p>
-          Is banned: <span className="font-bold">{isBanned.toString()}</span>
-        </p>
-        <p>
-          Is active: <span className="font-bold">{isActive.toString()}</span>
-        </p>
-        <p>
-          Created at: <span className="font-bold">{dayjs(createdAt).format("DD.MM.YYYY")}</span>
-        </p>
-        <p>
-          Last login: <span className="font-bold">{lastLogin ? dayjs(lastLogin).format("DD.MM.YYYY") : "-"}</span>
-        </p>
+        <div className="flex flex-row gap-4">
+          <p>
+            Is banned: <span className={`font-bold ${isBanned ? "text-red-500" : ""}`}>{isBanned.toString().toUpperCase()}</span>
+          </p>
+          <p>
+            Is active: <span className={`font-bold ${isActive ? "" : "text-red-500"}`}>{isActive.toString().toUpperCase()}</span>
+          </p>
+        </div>
+        <div className="flex flex-row gap-4">
+          <p>
+            Created at: <span className="font-bold">{dayjs(createdAt).format("DD.MM.YYYY")}</span>
+          </p>
+          <p>
+            Last login: <span className="font-bold">{lastLogin ? dayjs(lastLogin).format("DD.MM.YYYY") : "-"}</span>
+          </p>
+        </div>
       </div>
       <div className="w-1/4 flex flex-col items-center j">
         <p>
-          Total: <span className="font-bold">{isBanned.toString()}</span>
+          Total: <span className="font-bold">{total.toString()}</span>
         </p>
         <p>
-          In work: <span className="font-bold">{isBanned.toString()}</span>
+          In work: <span className="font-bold">{inWork.toString()}</span>
         </p>
       </div>
       <div className="w-1/4 flex flex-col items-center justify-evenly ">

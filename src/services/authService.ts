@@ -15,6 +15,8 @@ export interface IUser {
   role: string;
   isActive: boolean;
   isBanned: boolean;
+  inWork: number;
+  total: number;
   createdAt?: Date;
   updatedAt?: Date;
   lastLogin?: Date;
@@ -33,6 +35,11 @@ const authService = {
   async logout() {
     await apiService.post(urls.auth.logout);
     return true;
+  },
+  async refresh() {
+    const { data } = await apiService.post(urls.auth.refresh);
+    console.log(data);
+    return data;
   },
 };
 

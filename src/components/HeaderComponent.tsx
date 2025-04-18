@@ -11,11 +11,12 @@ export default function HeaderComponent() {
   const router = useRouter();
   const pathname = usePathname();
   const queryClient = useQueryClient();
-  const { user } = useUserStore();
+  const { user, logout: logoutStore } = useUserStore();
   const logout = () => {
-    queryClient.clear();
-    authService.logout();
     router.replace("/login");
+    authService.logout();
+    queryClient.clear();
+    logoutStore();
   };
   return (
     <header className="flex justify-between items-center h-16 bg-green-200">

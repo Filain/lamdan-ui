@@ -138,7 +138,7 @@ export default function OrdersComponent() {
           Phone{getSortIcon("phone")}
         </div>
         <div
-          className="flex flex-row items-center justify-center cursor-pointer transition-transform hover:scale-105 active:scale-85 w-1/12"
+          className="flex flex-row items-center justify-center cursor-pointer transition-transform hover:scale-105 active:scale-85 w-1/24"
           onClick={() => handleSortClick("age")}
         >
           Age{getSortIcon("age")}
