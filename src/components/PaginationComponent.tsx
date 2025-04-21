@@ -8,7 +8,7 @@ export default function PaginationComponent() {
   const router = useRouter();
   const { total } = usePaginationStore();
 
-  const page = parseInt(searchParams.get("page") || "");
+  const page = parseInt(searchParams.get("page") || "1");
   const goToPage = (pageNumber: number) => {
     const newQueryParams = new URLSearchParams(searchParams.toString());
     newQueryParams.set("page", String(pageNumber));
