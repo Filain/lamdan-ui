@@ -16,5 +16,8 @@ export const useUserStore = create<IUserState>((set) => ({
     set({ user: userData });
   },
 
-  logout: () => set({ user: null }),
+  logout: () => {
+    console.log("Logging out...");
+    set({ user: null });
+  },
 }));

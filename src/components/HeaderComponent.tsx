@@ -13,6 +13,7 @@ export default function HeaderComponent() {
   const queryClient = useQueryClient();
   const { user, logout: logoutStore } = useUserStore();
   const logout = () => {
+    logoutStore();
     router.replace("/login");
     authService.logout();
     queryClient.clear();

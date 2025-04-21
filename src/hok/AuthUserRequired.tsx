@@ -40,7 +40,7 @@ export default function AuthUserRequired({ children }: { children: React.ReactNo
     } else {
       setLoading(false); // Якщо користувач вже є, зупиняємо завантаження
     }
-  }, [setUser, user, router]);
+  }, [logout, setUser, user, router]);
 
   // Показуємо лише спінер під час перевірки автентифікації
   if (loading) {

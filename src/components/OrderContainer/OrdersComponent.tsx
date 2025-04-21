@@ -33,7 +33,7 @@ export default function OrdersComponent() {
     .filter(Boolean)
     .join(",");
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: [
       "orders",
       page,
@@ -100,9 +100,9 @@ export default function OrdersComponent() {
   if (isLoading) {
     return <Loading />;
   }
-  if (error) {
-    return <span>Error: {error.message}</span>;
-  }
+  // if (error) {
+  //   return <span>Error: {error.message}</span>;
+  // }
 
   return (
     <>
