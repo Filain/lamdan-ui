@@ -85,7 +85,7 @@ export default function FilterComponent() {
   };
 
   return (
-    <form className="border-2 flex flex-row justify-center items-center  gap-2 p-4">
+    <form className=" flex flex-row justify-center items-center  gap-2 p-4">
       <div>
         <div className="flex gap-2 px-2">
           <InputText {...register("group")} label="Group" />

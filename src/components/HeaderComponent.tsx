@@ -20,7 +20,7 @@ export default function HeaderComponent() {
     logoutStore();
   };
   return (
-    <header className="flex justify-between items-center h-16 bg-green-200">
+    <header className="flex justify-between items-center min-h-16 bg-green-200 ">
       <p className="ml-5 text-4xl font-bold text-green-800 drop-shadow-xl">Logo</p>
       <div className=" flex flex-row items-center">
         <p className="mr-5 text-4xl font-bold text-green-800 drop-shadow-xl">{user?.name}</p>
