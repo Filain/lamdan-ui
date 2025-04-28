@@ -10,10 +10,8 @@ export default function MainLayout({
 }>) {
   return (
     <main className="borer-">
-      <AuthUserRequired>
-        <HeaderComponent />
-        {children}
-      </AuthUserRequired>
+      <HeaderComponent />
+      <AuthUserRequired>{children}</AuthUserRequired>
     </main>
   );
 }

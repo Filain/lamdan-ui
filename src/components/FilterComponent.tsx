@@ -42,9 +42,16 @@ export default function FilterComponent() {
     .join(",");
 
   useEffect(() => {
-    console.log("Watched values:", watchedValues);
     const params = new URLSearchParams(searchParams.toString());
-    params.set("page", "1");
+
+    // Якщо будь-який фільтр змінився, скидаємо сторінку на 1
+    const filtersChanged = Object.keys(watchedValues).some((key) => {
+      return watchedValues[key] !== searchParams.get(key);
+    });
+
+    if (filtersChanged) {
+      params.set("page", "1");
+    }
 
     Object.entries(watchedValues).forEach(([key, value]) => {
       if (value) {

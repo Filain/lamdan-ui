@@ -14,7 +14,7 @@ export default function AdminRequired({ children }: { children: React.ReactNode 
   useEffect(() => {
     if (user) {
       if (user.role !== "admin") {
-        router.replace("/main");
+        router.replace("/");
       } else {
         setLoading(false);
       }

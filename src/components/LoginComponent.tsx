@@ -16,23 +16,7 @@ import { loginValidator } from "@/validators/loginValidator";
 export default function LoginComponent() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  // const queryClient = useQueryClient();
   const { setUser } = useUserStore();
-  // const { mutate } = useMutation({
-  //   mutationFn: (variables: IloginData) => authService.login(variables),
-  //   onSuccess: (data) => {
-  //     setUser(data);
-  //
-  //     router.push("/main");
-  //   },
-  //   onError: (error: AxiosError) => {
-  //     if (error.status === 404) {
-  //       setErrorMessage("Login or password is incorrect");
-  //     } else {
-  //       setErrorMessage("Error");
-  //     }
-  //   },
-  // });
 
   const {
     register,
@@ -49,7 +33,7 @@ export default function LoginComponent() {
       .then((data) => {
         if (data) {
           setUser(data);
-          router.push("/main");
+          router.push("/");
         }
       })
       .catch((error: AxiosError) => {
@@ -59,8 +43,6 @@ export default function LoginComponent() {
           setErrorMessage("Error");
         }
       });
-
-    // mutate(user);
   };
 
   return (
