@@ -29,7 +29,9 @@ export default function OrderComponent({ order, isDark }: IOrderProps) {
     status,
     group,
     manager,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     msg,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     utm,
   } = order;
 

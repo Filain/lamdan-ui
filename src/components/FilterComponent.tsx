@@ -55,7 +55,7 @@ export default function FilterComponent() {
     });
 
     router.push(`?${params.toString()}`);
-  }, [watchedValues]);
+  }, [router, searchParams, watchedValues]);
 
   const downloadExcel = async () => {
     await exelService.getAll({

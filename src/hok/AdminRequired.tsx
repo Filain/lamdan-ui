@@ -23,7 +23,7 @@ export default function AdminRequired({ children }: { children: React.ReactNode 
       router.replace("/login");
       logout();
     }
-  }, [router, logout]);
+  }, [router, logout, user]);
 
   if (loading) {
     return <Loading />;
