@@ -17,6 +17,7 @@ export interface IUser {
   isBanned: boolean;
   inWork: number;
   total: number;
+  activation?: string;
   createdAt?: Date;
   updatedAt?: Date;
   lastLogin?: Date;

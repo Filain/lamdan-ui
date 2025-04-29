@@ -18,7 +18,12 @@ export default function AuthUserRequired({ children }: { children: React.ReactNo
     const checkAuth = async () => {
       try {
         const currentUser = await authService.me();
-        setUser(currentUser);
+        if (currentUser) {
+          setUser(currentUser);
+        } else {
+          router.replace("/login");
+          logout();
+        }
       } catch (e: unknown) {
         if (e instanceof AxiosError && e.response?.status === 403) {
           router.replace("/login");
@@ -28,7 +33,13 @@ export default function AuthUserRequired({ children }: { children: React.ReactNo
         setLoading(false);
       }
     };
-    checkAuth();
+
+    // Перевіряємо користувача лише якщо його ще немає
+    if (!user) {
+      checkAuth();
+    } else {
+      setLoading(false); // Якщо користувач вже є, зупиняємо завантаження
+    }
   }, [logout, setUser, user, router]);
 
   // Показуємо лише спінер під час перевірки автентифікації

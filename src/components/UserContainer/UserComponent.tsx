@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 
+import Loading from "@/app/loading";
 import Button from "@/components/ui/Button";
 import { adminService } from "@/services/adminService";
 import { IUser } from "@/services/authService";
@@ -27,9 +28,16 @@ export default function UserComponent({ user }: IUserProps) {
     },
   });
 
-  const { mutate: activate } = useMutation({
+  const { mutate: activate, isPending } = useMutation({
     mutationFn: (id: string) => adminService.getActivationToken(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
   });
+
+  if (isPending) {
+    return <Loading />;
+  }
 
   return (
     <div className=" flex flex-row gap-4 border-2 border-green-800  m-2 p-4 rounded-3xl w-full max-w-[1024px]">
@@ -76,11 +84,11 @@ export default function UserComponent({ user }: IUserProps) {
       </div>
       <div className="w-1/4 flex flex-col items-center justify-evenly ">
         {isActive ? (
-          <Button type="button" onClick={() => activate(user._id)}>
+          <Button type="button" disabled={user.activation === "activation"} onClick={() => activate(user._id)}>
             RECOVERY PASSWORD
           </Button>
         ) : (
-          <Button type="button" onClick={() => activate(user._id)}>
+          <Button type="button" disabled={user.activation === "activation"} onClick={() => activate(user._id)}>
             ACTIVATE
           </Button>
         )}

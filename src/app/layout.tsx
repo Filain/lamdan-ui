@@ -2,7 +2,9 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import React from "react";
 
+import FooterComponent from "@/components/FooterComponent";
 import Providers from "@/lib/Provider";
 
 const montserratSans = Montserrat({
@@ -27,10 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserratSans.variable} antialiased`}>
-        {/*className={`${montserratSans.variable} Додає змінні шрифтів у клас body*/}
-        {/* antialiased покращує згладжування тексту*/}
+      <body className={`${montserratSans.variable} antialiased h-full flex flex-col min-h-screen`}>
         <Providers>{children}</Providers>
+        <FooterComponent />
       </body>
     </html>
   );

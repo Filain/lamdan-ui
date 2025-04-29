@@ -1,6 +1,7 @@
 "use client";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
@@ -18,6 +19,7 @@ interface IProps {
 }
 
 export default function PasswordActivateComponent({ token }: IProps) {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -30,13 +32,16 @@ export default function PasswordActivateComponent({ token }: IProps) {
     mutationFn: (data: { token: string; password: string }) => adminService.changePassword(data.token, data.password),
   });
 
+  const handleSubmitSuccess = (data: IPassword) => {
+    mutate({ token: token, password: data.password });
+    router.push("/login");
+  };
+
   return (
     <div className=" h-[calc(100vh-250px)] flex items-center justify-center ">
       <form
         className="flex flex-col border-2 border-green-800 rounded-xl w-[300px] p-4 bg-white"
-        onSubmit={handleSubmit((data) => {
-          mutate({ token: token, password: data.password });
-        })}
+        onSubmit={handleSubmit((data) => handleSubmitSuccess(data))}
       >
         <InputPassword {...register("password")} label="Password" />
         <p className="text-red-500 text-sm h-4">{errors.password?.message ? String(errors.password?.message) : ""}</p>

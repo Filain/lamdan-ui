@@ -3,5 +3,5 @@ export default function LoginLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main className="bg-green-300 h-screen ">{children}</main>;
+  return <main className="bg-green-300 h-[calc(100vh-64px)] ">{children}</main>;
 }
