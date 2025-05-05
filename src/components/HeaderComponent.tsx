@@ -14,7 +14,7 @@ export default function HeaderComponent() {
   const { user, logout: logoutStore } = useUserStore();
   const logout = () => {
     logoutStore();
-    router.replace("/login");
+    router.replace("/");
     authService.logout();
     queryClient.clear();
     logoutStore();
@@ -30,7 +30,7 @@ export default function HeaderComponent() {
           </Button>
         )}
         {pathname.startsWith("/admin") && (
-          <Button className="mr-5" icon={true} onClick={() => router.push("/")}>
+          <Button className="mr-5" icon={true} onClick={() => router.push("/order")}>
             <Icons name="home" className=" w-10 h-10 fill-transparent stroke-white  stroke-1" />
           </Button>
         )}

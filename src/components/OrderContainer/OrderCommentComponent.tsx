@@ -41,8 +41,8 @@ export default function OrderCommentComponent({ order }: ICommentProps) {
   };
 
   const handleModal = () => {
-    console.log("order manager", order.manager);
-    console.log("me", user?._id);
+    // console.log("order manager", order.manager);
+    // console.log("me", user?._id);
 
     if (order.manager?._id === user?._id || order.manager === null) {
       setModal(true);

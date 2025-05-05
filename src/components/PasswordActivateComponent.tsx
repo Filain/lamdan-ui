@@ -34,7 +34,7 @@ export default function PasswordActivateComponent({ token }: IProps) {
 
   const handleSubmitSuccess = (data: IPassword) => {
     mutate({ token: token, password: data.password });
-    router.push("/login");
+    router.push("/");
   };
 
   return (

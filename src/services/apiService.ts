@@ -15,7 +15,7 @@ apiService.interceptors.response.use(
     const originalRequest = error.config as InternalAxiosRequestConfig | null;
 
     if (error?.response?.status === 401) {
-      console.log(error?.response?.status);
+      // console.log(error?.response?.status);
       if (!isRefreshing) {
         isRefreshing = true;
 

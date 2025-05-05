@@ -12,7 +12,7 @@ const groupService = {
     return data;
   },
   async post(dto: { group: string }): Promise<IGroup> {
-    console.log(typeof dto);
+    // console.log(typeof dto);
     const { data } = await apiService.post(urls.group.post, dto);
     return data;
   },

@@ -14,13 +14,13 @@ export default function AdminRequired({ children }: { children: React.ReactNode 
   useEffect(() => {
     if (user) {
       if (user.role !== "admin") {
-        router.replace("/");
+        router.replace("/order");
       } else {
         setLoading(false);
       }
     } else {
       // Якщо юзера нема - теж редірект на логін
-      router.replace("/login");
+      router.replace("/");
       logout();
     }
   }, [router, logout, user]);

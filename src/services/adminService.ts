@@ -47,7 +47,7 @@ const adminService = {
     return data;
   },
   async changePassword(token: string, password: string): Promise<boolean> {
-    console.log("adminService.changePassword", token, password);
+    // console.log("adminService.changePassword", token, password);
     const { data } = await apiService.patch(urls.admin.changePassword, { token, password });
     return data;
   },

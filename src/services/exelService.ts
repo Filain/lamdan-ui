@@ -4,7 +4,7 @@ import { IOrderQuery } from "@/services/orderService";
 
 const exelService = {
   async getAll(query?: IOrderQuery) {
-    console.log("url", urls.excel.get);
+    // console.log("url", urls.excel.get);
     const response = await apiService.get(urls.excel.get, {
       params: query,
       responseType: "blob", // ✅ отримуємо Excel у вигляді Blob

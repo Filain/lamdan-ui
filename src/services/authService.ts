@@ -39,7 +39,7 @@ const authService = {
   },
   async refresh() {
     const { data } = await apiService.post(urls.auth.refresh);
-    console.log(data);
+    // console.log(data);
     return data;
   },
 };

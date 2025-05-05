@@ -3,7 +3,7 @@
 import { joiResolver } from "@hookform/resolvers/joi";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
@@ -17,6 +17,20 @@ export default function LoginComponent() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { setUser } = useUserStore();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const user = await authService.me();
+      if (user) {
+        // startTransition гарантує, що push не порушить рендер
+        React.startTransition(() => {
+          router.push("/order");
+        });
+      }
+    };
+
+    checkAuth();
+  }, []);
 
   const {
     register,
@@ -33,7 +47,7 @@ export default function LoginComponent() {
       .then((data) => {
         if (data) {
           setUser(data);
-          router.push("/");
+          router.push("/order");
         }
       })
       .catch((error: AxiosError) => {

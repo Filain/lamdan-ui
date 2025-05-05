@@ -21,12 +21,12 @@ export default function AuthUserRequired({ children }: { children: React.ReactNo
         if (currentUser) {
           setUser(currentUser);
         } else {
-          router.replace("/login");
+          router.replace("/");
           logout();
         }
       } catch (e: unknown) {
         if (e instanceof AxiosError && e.response?.status === 403) {
-          router.replace("/login");
+          router.replace("/");
           logout();
         }
       } finally {

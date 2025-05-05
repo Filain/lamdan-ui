@@ -12,12 +12,11 @@ export const useUserStore = create<IUserState>((set) => ({
   user: null,
 
   setUser: (userData) => {
-    console.log("Setting user:", userData); // Додаємо лог тут
+    // console.log("Setting user:", userData); // Додаємо лог тут
     set({ user: userData });
   },
 
   logout: () => {
-    console.log("Logging out...");
     set({ user: null });
   },
 }));
