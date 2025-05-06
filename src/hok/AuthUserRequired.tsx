@@ -34,24 +34,20 @@ export default function AuthUserRequired({ children }: { children: React.ReactNo
       }
     };
 
-    // Перевіряємо користувача лише якщо його ще немає
     if (!user) {
       checkAuth();
     } else {
-      setLoading(false); // Якщо користувач вже є, зупиняємо завантаження
+      setLoading(false);
     }
   }, [logout, setUser, user, router]);
 
-  // Показуємо лише спінер під час перевірки автентифікації
   if (loading) {
     return <Loading />;
   }
 
-  // Якщо користувач авторизований (стан user не null), відображаємо обгорнутий компонент (children)
   if (user) {
     return <>{children}</>;
   }
 
-  // Якщо користувач не авторизований і завантаження завершено, нічого не відображаємо (перенаправлення вже відбулося)
   return null;
 }

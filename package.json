@@ -1,5 +1,7 @@
 {
   "name": "lamdan-ui",
+  "license": "MIT",
+  "author": "Volodymyr Fylypiv <ratecurrent@gmail.com>",
   "version": "0.1.0",
   "private": true,
   "scripts": {

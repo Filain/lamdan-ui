@@ -56,10 +56,8 @@ const subscribeToWaitList = (cb: IWaitList): void => {
 
 const runAfterRefresh = (): void => {
   while (waitList.length > 0) {
-    // Перевірка, чи масив не порожній
-    const cb = waitList.shift(); // Використовуємо shift для видалення першого елемента
+    const cb = waitList.shift();
     if (cb) {
-      // Перевірка, чи cb не є undefined
       cb();
     }
   }

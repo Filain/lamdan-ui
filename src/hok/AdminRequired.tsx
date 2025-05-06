@@ -19,7 +19,6 @@ export default function AdminRequired({ children }: { children: React.ReactNode 
         setLoading(false);
       }
     } else {
-      // Якщо юзера нема - теж редірект на логін
       router.replace("/");
       logout();
     }

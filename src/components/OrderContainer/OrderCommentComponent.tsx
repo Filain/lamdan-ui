@@ -8,8 +8,8 @@ import OrderFormComponent from "@/components/OrderFormComponent";
 import Button from "@/components/ui/Button";
 import InputText from "@/components/ui/form/InputText";
 import Modal from "@/components/ui/Modal";
+import { IOrder } from "@/interfaces/orderInterface";
 import { commentService } from "@/services/commentService";
-import { IOrder } from "@/services/orderService";
 import { useModalStore } from "@/store/useModalStore";
 import { useUserStore } from "@/store/useUserStore";
 
@@ -41,9 +41,6 @@ export default function OrderCommentComponent({ order }: ICommentProps) {
   };
 
   const handleModal = () => {
-    // console.log("order manager", order.manager);
-    // console.log("me", user?._id);
-
     if (order.manager?._id === user?._id || order.manager === null) {
       setModal(true);
     } else {

@@ -4,7 +4,23 @@
 
 Frontend part of a CRM system for managing applications in a programming school.
 
-Implemented using Next.js, Tailwind CSS, TypeScript, TanStack Query, React Hook Form, and Zustand with support for roles, authorization, and application processing.
+## 🔐 Login Credentials
+
+To log in, use the following credentials:
+
+- **Email**: `admin@gmail.com`
+- **Password**: `admin`
+
+
+## 🛠 Tech Stack
+
+- **Next.js**: React-based framework for server-side rendering, routing, and full-stack web application development.
+- **React Hook Form**: Lightweight library for managing forms and validations using React hooks.
+- **Joi**: Schema-based validation library for handling complex data validation logic.
+- **tanstack/react-query**: Powerful data-fetching and caching library for React apps to manage server state.
+- **Axios**: Promise-based HTTP client for making API requests from the client or server.
+- **Zustand**: Minimalist state management library for React applications.
+- **Day.js**: Lightweight and fast library for manipulating and formatting dates.
 
 ### Installation
 
@@ -48,10 +64,16 @@ Implemented using Next.js, Tailwind CSS, TypeScript, TanStack Query, React Hook 
 ## Testing
 For testing use the postman collection: postman/Lamdan Copy.postman_collection.json
 
+⚠️ **Note:** For testing purposes, the access and refresh token lifetimes are intentionally set to short durations.
+
+## Live Demo
+👉 [lamdan.vercel.app](https://lamdan.vercel.app/)
+
 ## Author
 
 This test project was developed by **Volodymyr Fylypiv** as part of a development journey.
 If you have any questions or suggestions, feel free to reach out:
 
 - **Email**: [ratecurrent@gmail.com](mailto:ratecurrent@gmail.com)
+- **Linkedin**: [linkedin.com](https://www.linkedin.com/in/volodymyr-fylypiv/)
 - **GitHub**: [github.com/Filain](https://github.com/Filain)

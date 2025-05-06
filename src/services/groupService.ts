@@ -1,10 +1,6 @@
 import { urls } from "@/constants/urls";
+import { IGroup } from "@/interfaces/groupInterface";
 import { apiService } from "@/services/apiService";
-
-export interface IGroup {
-  _id: string;
-  group: string;
-}
 
 const groupService = {
   async getAll(): Promise<IGroup[]> {

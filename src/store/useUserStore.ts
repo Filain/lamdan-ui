@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { IUser } from "@/services/authService";
+import { IUser } from "@/interfaces/authInterface";
 
 interface IUserState {
   user: IUser | null;

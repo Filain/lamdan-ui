@@ -1,16 +1,6 @@
 import { urls } from "@/constants/urls";
+import { IComment } from "@/interfaces/commentInterface";
 import { apiService } from "@/services/apiService";
-import { IUser } from "@/services/authService";
-
-export interface IComment {
-  _id?: string;
-  comment: string;
-  order?: string;
-  commentedBy?: IUser;
-  createdAt?: Date;
-  updatedAt?: Date;
-  __v?: number;
-}
 
 const commentService = {
   async getAll(id: string): Promise<IComment[]> {

@@ -1,25 +1,7 @@
 import { urls } from "@/constants/urls";
+import { ICreateUser, IStatic, IUserResponseData } from "@/interfaces/adminInterface";
 import { apiService } from "@/services/apiService";
 import { IUser } from "@/services/authService";
-
-export interface IStatic {
-  total: number;
-  agree: number;
-  inWork: number;
-  disagree: number;
-  newOrders: number;
-}
-
-export interface IUserResponseData {
-  data: IUser[];
-  total: number;
-}
-
-export interface ICreateUser {
-  name: string;
-  surname: string;
-  email: string;
-}
 
 const adminService = {
   async getStatic(): Promise<IStatic> {
@@ -47,7 +29,6 @@ const adminService = {
     return data;
   },
   async changePassword(token: string, password: string): Promise<boolean> {
-    // console.log("adminService.changePassword", token, password);
     const { data } = await apiService.patch(urls.admin.changePassword, { token, password });
     return data;
   },

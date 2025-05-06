@@ -1,52 +1,10 @@
 import { urls } from "@/constants/urls";
-import { IOrderCreate } from "@/interfaces/orderInterface";
+import { IOrder, IOrderCreate, IOrderQuery } from "@/interfaces/orderInterface";
 import { apiService } from "@/services/apiService";
-import { IUser } from "@/services/authService";
-import { IGroup } from "@/services/groupService";
 
 export interface IOrderResponseData {
   data: IOrder[];
   total: number;
-}
-
-export interface IOrder {
-  manager: IUser | null;
-  group: IGroup | null;
-  comment: string[];
-  _id: string;
-  name: string;
-  surname: string;
-  email: string;
-  phone: string;
-  age: number;
-  course: string;
-  course_format: string;
-  course_type: string;
-  sum: number | null;
-  already_paid: number | null;
-  created_at: string;
-  utm: string;
-  msg: string | null;
-  status: string;
-}
-
-export interface IOrderQuery {
-  page?: string;
-  limit?: string;
-  sort?: string;
-  name?: string;
-  surname?: string;
-  email?: string;
-  phone?: string;
-  age?: string;
-  course?: string;
-  course_format?: string;
-  course_type?: string;
-  status?: string;
-  group?: string;
-  my?: boolean;
-  sum?: string;
-  already_paid?: string;
 }
 
 const orderService = {

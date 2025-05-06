@@ -1,4 +1,4 @@
-export interface ISelectOption {
-  value: string;
-  label: string;
+export interface IGroup {
+  _id: string;
+  group: string;
 }

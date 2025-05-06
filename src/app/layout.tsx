@@ -14,8 +14,6 @@ const montserratSans = Montserrat({
   display: "swap",
   variable: "--font-mont",
 });
-// оголошуються змінні для підключених шрифтів
-// <body className={`${montserratSans.variable} antialiased`}> Додає змінні шрифтів
 
 export const metadata: Metadata = {
   title: "Create Next App",
