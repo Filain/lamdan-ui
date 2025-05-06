@@ -100,7 +100,7 @@ export default function OrderCommentComponent({ order }: ICommentProps) {
           </Button>
         </div>
         <Modal onClose={() => setModal(false)} isOpen={modal}>
-          <OrderFormComponent order={order} />
+          <OrderFormComponent order={order} isNew={false} />
         </Modal>
       </div>{" "}
     </div>

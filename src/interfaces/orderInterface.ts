@@ -11,6 +11,8 @@ export interface IFormData {
   already_paid?: number;
   course_format?: string;
   course_type?: string;
+  utm?: string;
+  msg?: string;
 }
 
 // export interface IOrderCreate {
@@ -41,4 +43,6 @@ export interface IOrderCreate {
   already_paid?: number;
   course_format?: string;
   course_type?: string;
+  utm?: string;
+  msg?: string;
 }

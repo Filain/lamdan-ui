@@ -20,17 +20,22 @@ export default function LoginComponent() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const user = await authService.me();
-      if (user) {
-        // startTransition гарантує, що push не порушить рендер
-        React.startTransition(() => {
-          router.push("/order");
-        });
+      try {
+        const user = await authService.me();
+        if (user) {
+          // startTransition гарантує, що push не порушить рендер
+          React.startTransition(() => {
+            router.push("/order");
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        router.push("/");
       }
     };
 
     checkAuth();
-  }, []);
+  }, [router]);
 
   const {
     register,

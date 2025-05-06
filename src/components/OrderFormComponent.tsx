@@ -16,9 +16,10 @@ import { orderValidator } from "@/validators/orderValidator";
 
 interface ICommentProps {
   order?: IOrder;
+  isNew: boolean;
 }
 
-export default function OrderFormComponent({ order }: ICommentProps) {
+export default function OrderFormComponent({ order, isNew }: ICommentProps) {
   const { setModal } = useModalStore();
   const queryClient = useQueryClient();
   const {
@@ -44,8 +45,16 @@ export default function OrderFormComponent({ order }: ICommentProps) {
     },
   });
 
-  const { mutate } = useMutation({
+  const updateMutation = useMutation({
     mutationFn: (data: IOrderCreate) => orderService.update(order?._id ?? "", data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      setModal(false);
+      reset();
+    },
+  });
+  const createMutation = useMutation({
+    mutationFn: (data: IOrderCreate) => orderService.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
       setModal(false);
@@ -59,12 +68,17 @@ export default function OrderFormComponent({ order }: ICommentProps) {
   };
 
   const submit = (data: IOrderCreate) => {
-    mutate(data);
+    if (isNew) {
+      createMutation.mutate(data);
+    } else {
+      updateMutation.mutate(data);
+    }
+    console.log(data);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit((data) => submit(data))} className="border-2 border-green-800 rounded-xl  p-4 w-[700px]">
+      <form onSubmit={handleSubmit(submit)} className="border-2 border-green-800 rounded-xl  p-4 w-[700px]">
         <div className="flex gap-6 ">
           <div className="w-1/2">
             <InputGroup {...register("group")} label="Group" />
@@ -95,6 +109,16 @@ export default function OrderFormComponent({ order }: ICommentProps) {
             <p className="text-red-500 text-sm h-4">{errors.course_type?.message ? String(errors.course_type?.message) : ""}</p>
           </div>
         </div>
+
+        {isNew && (
+          <div className="border-t-1 border-green-800 pt-2">
+            <InputText {...register("utm")} label="UTM" />
+            <p className="text-red-500 text-sm h-4">{errors.utm?.message ? String(errors.utm?.message) : ""}</p>
+            <InputText {...register("msg")} label="Message" />
+            <p className="text-red-500 text-sm h-4">{errors.msg?.message ? String(errors.msg?.message) : ""}</p>
+          </div>
+        )}
+
         <div className="flex  justify-end gap-4 mt-2 ">
           <Button type={"button"} onClick={() => closeModal()}>
             CLOSE

@@ -1,12 +1,11 @@
 import Joi from "joi";
 
 const orderValidator = Joi.object({
-  group: Joi.string().min(2).max(30).optional().allow(""),
+  group: Joi.string().min(2).max(30).required().messages({ "string.min": "Must be at least 2 characters" }),
   name: Joi.string()
     .min(2)
     .max(30)
-    .optional()
-    .allow("")
+    .required()
     .pattern(/^[a-zA-Zа-яА-ЯёЁіІїЇєЄґҐ]+$/u)
     .messages({
       "string.pattern.base": "Just letters",
@@ -14,23 +13,22 @@ const orderValidator = Joi.object({
   surname: Joi.string()
     .min(2)
     .max(30)
-    .optional()
-    .allow("")
+    .required()
     .pattern(/^[a-zA-Zа-яА-ЯёЁіІїЇєЄґҐ]+$/u)
     .messages({
       "string.pattern.base": "Just letters",
     }),
   email: Joi.string()
     .pattern(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)
-    .optional()
-    .allow("")
+    .required()
+
     .messages({
       "string.pattern.base": "Required format: name@domain.extension",
     }),
   phone: Joi.string()
     .pattern(/^(0\d{9}|8\(\d{3}\)\s\d{3}-\d)$/)
-    .optional()
-    .allow("")
+    .required()
+
     .messages({
       "string.pattern.base": "Required format: 0XXXXXXXXX",
     }),
@@ -41,5 +39,7 @@ const orderValidator = Joi.object({
   course: Joi.string().optional().allow(""),
   course_type: Joi.string().optional().allow(""),
   course_format: Joi.string().optional().allow(""),
+  utm: Joi.string().optional().allow(""),
+  msg: Joi.string().optional().allow(""),
 });
 export { orderValidator };
