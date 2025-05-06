@@ -8,7 +8,7 @@ import { useModalStore } from "@/store/useModalStore";
 export default function CreateOrderComponent() {
   const { modal, setModal } = useModalStore();
   return (
-    <div className="flex justify-start p-4 w-full max-w-[1300px] mx-auto">
+    <div className="flex justify-start p-4 w-full max-w-[1494px] mx-auto">
       <Button type={"button"} onClick={() => setModal(true)}>
         CREATE ORDER
       </Button>
