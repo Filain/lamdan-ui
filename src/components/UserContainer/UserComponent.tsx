@@ -3,8 +3,8 @@ import dayjs from "dayjs";
 
 import Loading from "@/app/loading";
 import Button from "@/components/ui/Button";
+import { IUser } from "@/interfaces/authInterface";
 import { adminService } from "@/services/adminService";
-import { IUser } from "@/services/authService";
 
 interface IUserProps {
   user: IUser;

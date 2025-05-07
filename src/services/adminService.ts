@@ -1,7 +1,7 @@
 import { urls } from "@/constants/urls";
 import { ICreateUser, IStatic, IUserResponseData } from "@/interfaces/adminInterface";
+import { IUser } from "@/interfaces/authInterface";
 import { apiService } from "@/services/apiService";
-import { IUser } from "@/services/authService";
 
 const adminService = {
   async getStatic(): Promise<IStatic> {

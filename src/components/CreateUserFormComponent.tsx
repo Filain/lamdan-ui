@@ -5,7 +5,8 @@ import { useForm } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
 import InputText from "@/components/ui/form/InputText";
-import { adminService, ICreateUser } from "@/services/adminService";
+import { ICreateUser } from "@/interfaces/adminInterface";
+import { adminService } from "@/services/adminService";
 import { useModalStore } from "@/store/useModalStore";
 import { userValidator } from "@/validators/userValidator";
 
@@ -26,13 +27,13 @@ export default function CreateUserFormComponent() {
     mutationFn: (data: ICreateUser) => adminService.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
-      setModal(false);
+      setModal(null);
       reset();
     },
   });
 
   const closeModal = () => {
-    setModal(false);
+    setModal(null);
     reset();
   };
 
