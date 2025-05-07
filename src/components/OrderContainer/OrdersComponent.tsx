@@ -71,6 +71,7 @@ export default function OrdersComponent() {
         course_type,
         my,
       }),
+    retry: false,
   });
 
   useEffect(() => {

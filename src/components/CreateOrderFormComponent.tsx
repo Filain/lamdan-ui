@@ -9,17 +9,12 @@ import InputNumber from "@/components/ui/form/InputNumber";
 import { InputSelect } from "@/components/ui/form/InputSelect";
 import InputText from "@/components/ui/form/InputText";
 import { Course, CourseFormat, CourseType, Statuses } from "@/constants/enums";
-import { IFormData, IOrder, IOrderCreate } from "@/interfaces/orderInterface";
+import { IFormData, IOrderCreate } from "@/interfaces/orderInterface";
 import { orderService } from "@/services/orderService";
 import { useModalStore } from "@/store/useModalStore";
 import { orderValidator } from "@/validators/orderValidator";
 
-interface ICommentProps {
-  order?: IOrder;
-  isNew: boolean;
-}
-
-export default function OrderFormComponent({ order, isNew }: ICommentProps) {
+export default function CreateOrderFormComponent() {
   const { setModal } = useModalStore();
   const queryClient = useQueryClient();
   const {
@@ -29,50 +24,24 @@ export default function OrderFormComponent({ order, isNew }: ICommentProps) {
     reset,
   } = useForm<IFormData>({
     resolver: joiResolver(orderValidator),
-    defaultValues: {
-      group: typeof order?.group === "object" && order.group !== null ? order.group._id : (order?.group ?? ""),
-      name: order?.name,
-      surname: order?.surname,
-      email: order?.email,
-      phone: order?.phone,
-      age: order?.age ?? undefined,
-      status: order?.status,
-      sum: order?.sum ?? undefined,
-      already_paid: order?.already_paid ?? undefined,
-      course: order?.course,
-      course_format: order?.course_format,
-      course_type: order?.course_type,
-    },
   });
 
-  const updateMutation = useMutation({
-    mutationFn: (data: IOrderCreate) => orderService.update(order?._id ?? "", data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["orders"] });
-      setModal(false);
-      reset();
-    },
-  });
   const createMutation = useMutation({
     mutationFn: (data: IOrderCreate) => orderService.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
-      setModal(false);
+      setModal(null);
       reset();
     },
   });
 
   const closeModal = () => {
-    setModal(false);
+    setModal(null);
     reset();
   };
 
   const submit = (data: IOrderCreate) => {
-    if (isNew) {
-      createMutation.mutate(data);
-    } else {
-      updateMutation.mutate(data);
-    }
+    createMutation.mutate(data);
     // console.log(data);
   };
 
@@ -109,16 +78,12 @@ export default function OrderFormComponent({ order, isNew }: ICommentProps) {
             <p className="text-red-500 text-sm h-4">{errors.course_type?.message ? String(errors.course_type?.message) : ""}</p>
           </div>
         </div>
-
-        {isNew && (
-          <div className="border-t-1 border-green-800 pt-2">
-            <InputText {...register("utm")} label="UTM" />
-            <p className="text-red-500 text-sm h-4">{errors.utm?.message ? String(errors.utm?.message) : ""}</p>
-            <InputText {...register("msg")} label="Message" />
-            <p className="text-red-500 text-sm h-4">{errors.msg?.message ? String(errors.msg?.message) : ""}</p>
-          </div>
-        )}
-
+        <div className="border-t-1 border-green-800 pt-2">
+          <InputText {...register("utm")} label="UTM" />
+          <p className="text-red-500 text-sm h-4">{errors.utm?.message ? String(errors.utm?.message) : ""}</p>
+          <InputText {...register("msg")} label="Message" />
+          <p className="text-red-500 text-sm h-4">{errors.msg?.message ? String(errors.msg?.message) : ""}</p>
+        </div>
         <div className="flex  justify-end gap-4 mt-2 ">
           <Button type={"button"} onClick={() => closeModal()}>
             CLOSE

@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
 
 import Loading from "@/app/loading";
-import OrderFormComponent from "@/components/OrderFormComponent";
+import EditOrderFormComponent from "@/components/EditOrderFormComponent";
 import Button from "@/components/ui/Button";
 import InputText from "@/components/ui/form/InputText";
 import Modal from "@/components/ui/Modal";
@@ -42,7 +42,7 @@ export default function OrderCommentComponent({ order }: ICommentProps) {
 
   const handleModal = () => {
     if (order.manager?._id === user?._id || order.manager === null) {
-      setModal(true);
+      setModal("edit");
     } else {
       alert("This order belongs to another user.");
     }
@@ -96,8 +96,8 @@ export default function OrderCommentComponent({ order }: ICommentProps) {
             Edit
           </Button>
         </div>
-        <Modal onClose={() => setModal(false)} isOpen={modal}>
-          <OrderFormComponent order={order} isNew={false} />
+        <Modal onClose={() => setModal("edit")} isOpen={modal === "edit"}>
+          <EditOrderFormComponent order={order} />
         </Modal>
       </div>{" "}
     </div>

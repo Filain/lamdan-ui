@@ -24,7 +24,7 @@ const InputGroup = forwardRef<HTMLInputElement | HTMLSelectElement, InputProps>(
     const [isAdding, setIsAdding] = useState(false);
     const [inputValue, setInputValue] = useState(externalValue ?? "");
     const queryClient = useQueryClient();
-    const { data } = useQuery({ queryKey: ["group"], queryFn: () => groupService.getAll() });
+    const { data } = useQuery({ queryKey: ["group"], queryFn: () => groupService.getAll(), retry: false });
     const groupOptions = data?.reduce<ISelectOption[]>((acc, { _id: value, group: label }) => {
       acc.push({ value, label });
       return acc;
