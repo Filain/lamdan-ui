@@ -5,6 +5,7 @@ import Loading from "@/app/loading";
 import Button from "@/components/ui/Button";
 import { IUser } from "@/interfaces/authInterface";
 import { adminService } from "@/services/adminService";
+import { useUserStore } from "@/store/useUserStore";
 
 interface IUserProps {
   user: IUser;
@@ -13,6 +14,7 @@ interface IUserProps {
 export default function UserComponent({ user }: IUserProps) {
   const { name, surname, email, role, isBanned, isActive, createdAt, lastLogin, inWork, total } = user;
   const queryClient = useQueryClient();
+  const { user: me } = useUserStore();
 
   const { mutate: ban } = useMutation({
     mutationFn: (id: string) => adminService.ban(id),
@@ -98,7 +100,7 @@ export default function UserComponent({ user }: IUserProps) {
             UNBAN
           </Button>
         ) : (
-          <Button type="button" onClick={() => ban(user._id)}>
+          <Button disabled={user._id === me?._id} type="button" onClick={() => ban(user._id)}>
             BAN
           </Button>
         )}
