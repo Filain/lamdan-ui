@@ -10,15 +10,12 @@ import { InputSelect } from "@/components/ui/form/InputSelect";
 import InputText from "@/components/ui/form/InputText";
 import Icons from "@/components/ui/Icons";
 import { Course, CourseFormat, CourseType, Statuses } from "@/constants/enums";
+import { IFormData } from "@/interfaces/orderInterface";
 import { exelService } from "@/services/exelService";
 
 export default function FilterComponent() {
-  const { control, register, reset } = useForm();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const watchedValues = useWatch({
-    control,
-  });
 
   const currentSort = searchParams.get("sort") || "id";
   const my = searchParams.get("my") === "true";
@@ -41,22 +38,45 @@ export default function FilterComponent() {
     .filter(Boolean)
     .join(",");
 
+  const { control, register, reset } = useForm<IFormData>({
+    defaultValues: {
+      group: group ?? undefined,
+      name: name ?? undefined,
+      surname: surname ?? undefined,
+      email: email ?? undefined,
+      phone: phone ?? undefined,
+      age: age ? Number(age) : undefined,
+      status: status ?? undefined,
+      sum: sum ? Number(sum) : undefined,
+      already_paid: already_paid ? Number(already_paid) : undefined,
+      course: course ?? undefined,
+      course_format: course_format ?? undefined,
+      course_type: course_type ?? undefined,
+      my,
+      sort: currentSort,
+      page,
+    },
+  });
+  const watchedValues = useWatch<IFormData>({
+    control,
+  });
+
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
 
-    const filtersChanged = Object.keys(watchedValues).some((key) => {
-      return watchedValues[key] !== searchParams.get(key);
+    const filtersChanged = (Object.keys(watchedValues) as (keyof IFormData)[]).some((key) => {
+      return String(watchedValues[key]) !== searchParams.get(key);
     });
 
     if (filtersChanged) {
       params.set("page", "1");
     }
 
-    Object.entries(watchedValues).forEach(([key, value]) => {
-      if (value) {
-        params.set(key, String(value));
+    (Object.entries(watchedValues) as [keyof IFormData, unknown][]).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        params.set(String(key), String(value));
       } else {
-        params.delete(key);
+        params.delete(String(key));
       }
     });
 
@@ -97,10 +117,10 @@ export default function FilterComponent() {
         <div className="flex gap-2 px-2">
           <InputSelect {...register("status")} name="status" label="Status" options={Statuses} />
           <InputNumber {...register("sum")} label="Sum" />
-          <InputNumber {...register("alreadyPaid")} label="Already paid" />
+          <InputNumber {...register("already_paid")} label="Already paid" />
           <InputSelect {...register("course")} name="course" label="Course" options={Course} />
-          <InputSelect {...register("courseFormat")} name="courseFormat" label="Course format" options={CourseFormat} />
-          <InputSelect {...register("courseType")} name="courseType" label="Course type" options={CourseType} />
+          <InputSelect {...register("course_format")} name="courseFormat" label="Course format" options={CourseFormat} />
+          <InputSelect {...register("course_type")} name="courseType" label="Course type" options={CourseType} />
         </div>
       </div>
       <InputCheckBox label="My" {...register("my")} />

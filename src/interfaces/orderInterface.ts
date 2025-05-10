@@ -16,6 +16,9 @@ export interface IFormData {
   course_type?: string;
   utm?: string;
   msg?: string;
+  my?: boolean; // ДОДАТИ
+  sort?: string; // ДОДАТИ
+  page?: string; // ДОДАТИ
 }
 
 export interface IOrderCreate {
