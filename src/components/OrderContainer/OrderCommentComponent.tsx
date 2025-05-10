@@ -96,7 +96,7 @@ export default function OrderCommentComponent({ order }: ICommentProps) {
             Edit
           </Button>
         </div>
-        <Modal onClose={() => setModal("edit")} isOpen={modal === "edit"}>
+        <Modal onClose={() => setModal(null)} isOpen={modal === "edit"}>
           <EditOrderFormComponent order={order} />
         </Modal>
       </div>{" "}

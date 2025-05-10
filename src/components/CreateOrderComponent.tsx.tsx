@@ -12,7 +12,7 @@ export default function CreateOrderComponent() {
       <Button type={"button"} onClick={() => setModal("create")}>
         CREATE ORDER
       </Button>
-      <Modal onClose={() => setModal("create")} isOpen={modal === "create"}>
+      <Modal onClose={() => setModal(null)} isOpen={modal === "create"}>
         <CreateOrderFormComponent />
       </Modal>
     </div>
