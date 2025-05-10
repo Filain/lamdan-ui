@@ -46,6 +46,11 @@ apiService.interceptors.response.use(
         });
       });
     }
+
+    if (error?.response?.status === 403) {
+      console.log("403", error?.response?.status);
+      window.location.replace("/");
+    }
     return Promise.reject(error);
   }
 );

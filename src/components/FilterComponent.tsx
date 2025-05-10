@@ -53,8 +53,6 @@ export default function FilterComponent() {
       course_format: course_format ?? undefined,
       course_type: course_type ?? undefined,
       my,
-      sort: currentSort,
-      page,
     },
   });
   const watchedValues = useWatch<IFormData>({
@@ -64,23 +62,33 @@ export default function FilterComponent() {
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
 
-    const filtersChanged = (Object.keys(watchedValues) as (keyof IFormData)[]).some((key) => {
-      return String(watchedValues[key]) !== searchParams.get(key);
+    let filtersChanged = false;
+
+    (Object.entries(watchedValues) as [keyof IFormData, unknown][]).forEach(([key, value]) => {
+      const paramKey = String(key);
+      const prevValue = searchParams.get(paramKey);
+      const newValue = value !== undefined && value !== null && value !== "" ? String(value) : null;
+
+      if (paramKey !== "page" && newValue !== prevValue) {
+        filtersChanged = true;
+      }
+
+      if (newValue !== null) {
+        params.set(paramKey, newValue);
+      } else {
+        params.delete(paramKey);
+      }
     });
 
     if (filtersChanged) {
       params.set("page", "1");
     }
 
-    (Object.entries(watchedValues) as [keyof IFormData, unknown][]).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== "") {
-        params.set(String(key), String(value));
-      } else {
-        params.delete(String(key));
-      }
-    });
-
-    router.push(`?${params.toString()}`);
+    // Якщо URL вже такий самий, не пушити повторно
+    const newUrl = `?${params.toString()}`;
+    if (`?${searchParams.toString()}` !== newUrl) {
+      router.push(newUrl);
+    }
   }, [router, searchParams, watchedValues]);
 
   const downloadExcel = async () => {
@@ -117,10 +125,10 @@ export default function FilterComponent() {
         <div className="flex gap-2 px-2">
           <InputSelect {...register("status")} name="status" label="Status" options={Statuses} />
           <InputNumber {...register("sum")} label="Sum" />
-          <InputNumber {...register("already_paid")} label="Already paid" />
+          <InputNumber {...register("already_paid")} name="already_paid" label="Already paid" />
           <InputSelect {...register("course")} name="course" label="Course" options={Course} />
-          <InputSelect {...register("course_format")} name="courseFormat" label="Course format" options={CourseFormat} />
-          <InputSelect {...register("course_type")} name="courseType" label="Course type" options={CourseType} />
+          <InputSelect {...register("course_format")} name="course_format" label="Course format" options={CourseFormat} />
+          <InputSelect {...register("course_type")} name="course_type" label="Course type" options={CourseType} />
         </div>
       </div>
       <InputCheckBox label="My" {...register("my")} />

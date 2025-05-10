@@ -16,9 +16,7 @@ export interface IFormData {
   course_type?: string;
   utm?: string;
   msg?: string;
-  my?: boolean; // ДОДАТИ
-  sort?: string; // ДОДАТИ
-  page?: string; // ДОДАТИ
+  my?: boolean;
 }
 
 export interface IOrderCreate {
@@ -60,20 +58,24 @@ export interface IOrder {
 }
 
 export interface IOrderQuery {
-  page?: string;
-  limit?: string;
-  sort?: string;
+  group?: string;
   name?: string;
   surname?: string;
   email?: string;
   phone?: string;
   age?: string;
+  status?: string;
+  sum?: string;
   course?: string;
+  already_paid?: string;
   course_format?: string;
   course_type?: string;
-  status?: string;
-  group?: string;
+  page?: string;
+  limit?: string;
+  sort?: string;
   my?: boolean;
-  sum?: string;
-  already_paid?: string;
 }
+
+// my?: boolean; // ДОДАТИ
+// sort?: string; // ДОДАТИ
+// page?: string; // ДОДАТИ

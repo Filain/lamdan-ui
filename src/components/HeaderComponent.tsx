@@ -15,9 +15,9 @@ export default function HeaderComponent() {
   const logout = async () => {
     await queryClient.cancelQueries();
     queryClient.clear();
+    router.replace("/");
     await authService.logout();
     logoutStore();
-    router.replace("/");
   };
   return (
     <header className="flex justify-between items-center min-h-16 bg-green-200 ">

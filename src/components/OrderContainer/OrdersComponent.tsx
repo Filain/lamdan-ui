@@ -22,10 +22,10 @@ export default function OrdersComponent() {
   const age = searchParams.get("age") || undefined;
   const status = searchParams.get("status") || undefined;
   const sum = searchParams.get("sum") || undefined;
-  const already_paid = searchParams.get("alreadyPaid") || undefined;
+  const already_paid = searchParams.get("already_paid") || undefined;
   const course = searchParams.get("course") || undefined;
-  const course_format = searchParams.get("courseFormat") || undefined;
-  const course_type = searchParams.get("courseType") || undefined;
+  const course_format = searchParams.get("course_format") || undefined;
+  const course_type = searchParams.get("course_type") || undefined;
 
   const page = searchParams.get("page") || "1";
 
