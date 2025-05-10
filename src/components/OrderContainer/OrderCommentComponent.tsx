@@ -29,22 +29,29 @@ export default function OrderCommentComponent({ order }: ICommentProps) {
   const { data, isPending: isLoading } = useQuery({ queryKey: ["comments", order._id], queryFn: () => commentService.getAll(order._id) });
   const { mutate, isPending } = useMutation({
     mutationFn: (data: { comment: string }) => commentService.create(order._id, data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["comments", order._id] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments", order._id] });
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+    },
   });
 
   if (isPending || isLoading) {
     return <Loading />;
   }
   const sendComment = (data: IFormData) => {
-    mutate({ comment: data.comment });
-    reset();
+    if (order.manager?._id === user?._id || order.manager === null) {
+      mutate({ comment: data.comment });
+      reset();
+    } else {
+      alert("This order belongs to another user.");
+    }
   };
 
   const handleModal = () => {
     if (order.manager?._id === user?._id || order.manager === null) {
       setModal("edit");
     } else {
-      alert("This order belongs to another user.");
+      alert("This order belongs to another user you can't add comment.");
     }
   };
 
