@@ -24,7 +24,7 @@ const adminService = {
     const { data } = await apiService.patch(urls.admin.unban(id));
     return data;
   },
-  async getActivationToken(id: string): Promise<boolean> {
+  async getActivationToken(id: string): Promise<string> {
     const { data } = await apiService.post(urls.admin.getActivationToken(id));
     return data;
   },

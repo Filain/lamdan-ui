@@ -32,8 +32,10 @@ export default function UserComponent({ user }: IUserProps) {
 
   const { mutate: activate, isPending } = useMutation({
     mutationFn: (id: string) => adminService.getActivationToken(id),
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
+      navigator.clipboard.writeText(data);
+      alert("Url copied to clipboard");
     },
   });
 
