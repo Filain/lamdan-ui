@@ -30,7 +30,7 @@ const urls = {
     getAll: "/admin",
     static: "/admin/statistics",
     create: "/admin/create",
-    changePassword: "/admin/change-password",
+    setPassword: "/admin/set-password",
     getActivationToken: (id: string) => `/admin/get-active/${id}`,
     ban: (id: string) => `/admin/ban/${id}`,
     unban: (id: string) => `/admin/unban/${id}`,

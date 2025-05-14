@@ -29,7 +29,7 @@ const adminService = {
     return data;
   },
   async changePassword(token: string, password: string): Promise<boolean> {
-    const { data } = await apiService.patch(urls.admin.changePassword, { token, password });
+    const { data } = await apiService.patch(urls.admin.setPassword, { token, password });
     return data;
   },
 };

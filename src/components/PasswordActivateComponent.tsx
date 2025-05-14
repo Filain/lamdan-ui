@@ -28,13 +28,15 @@ export default function PasswordActivateComponent({ token }: IProps) {
     resolver: joiResolver(passwordValidator),
   });
 
-  const { mutate } = useMutation({
+  const { mutate, error } = useMutation({
     mutationFn: (data: { token: string; password: string }) => adminService.changePassword(data.token, data.password),
+    onSuccess: () => {
+      router.push("/");
+    },
   });
 
   const handleSubmitSuccess = (data: IPassword) => {
     mutate({ token: token, password: data.password });
-    router.push("/");
   };
 
   return (
@@ -50,6 +52,7 @@ export default function PasswordActivateComponent({ token }: IProps) {
         <div className="flex justify-center items-center">
           <Button type="submit">Submit</Button>{" "}
         </div>
+        <p className="text-red-500 text-sm text-center h-4">{error ? "Error in changing password" : ""}</p>
       </form>
     </div>
   );
