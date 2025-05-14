@@ -1,7 +1,7 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Loading from "@/app/loading";
 import OrderComponent from "@/components/OrderContainer/OrderComponent";
@@ -9,6 +9,8 @@ import { orderService } from "@/services/orderService";
 import { usePaginationStore } from "@/store/usePaginationStore";
 
 export default function OrdersComponent() {
+  const [details, setDetails] = useState<string | null>(null);
+
   const { setTotal } = usePaginationStore();
 
   const searchParams = useSearchParams();
@@ -193,7 +195,9 @@ export default function OrdersComponent() {
           Manager{getSortIcon("manager")}
         </div>
       </div>
-      {data?.data.map((order, index) => <OrderComponent key={order._id} order={order} isDark={index % 2 === 0} />)}
+      {data?.data.map((order, index) => (
+        <OrderComponent key={order._id} order={order} isDark={index % 2 === 0} details={details} setDetails={setDetails} />
+      ))}
     </>
   );
 }

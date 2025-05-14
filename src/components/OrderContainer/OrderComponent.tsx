@@ -1,7 +1,6 @@
 "use client";
 
 import dayjs from "dayjs";
-import { useState } from "react";
 
 import OrderCommentComponent from "@/components/OrderContainer/OrderCommentComponent";
 import { IOrder } from "@/interfaces/orderInterface";
@@ -9,10 +8,12 @@ import { IOrder } from "@/interfaces/orderInterface";
 interface IOrderProps {
   order: IOrder;
   isDark: boolean;
+  details: string | null;
+  setDetails: (id: string | null) => void;
 }
 
-export default function OrderComponent({ order, isDark }: IOrderProps) {
-  const [details, setDetails] = useState<string | null>(null);
+export default function OrderComponent({ order, isDark, details, setDetails }: IOrderProps) {
+  // const [details, setDetails] = useState<string | null>(null);
   const {
     _id,
     name,
