@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useForm, useWatch } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
@@ -16,6 +16,7 @@ import { exelService } from "@/services/exelService";
 export default function FilterComponent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const currentSort = searchParams.get("sort") || "id";
   const my = searchParams.get("my") === "true";
@@ -60,36 +61,40 @@ export default function FilterComponent() {
   });
 
   useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    let filtersChanged = false;
-
-    (Object.entries(watchedValues) as [keyof IFormData, unknown][]).forEach(([key, value]) => {
-      const paramKey = String(key);
-      const prevValue = searchParams.get(paramKey);
-      const newValue = value !== undefined && value !== null && value !== "" ? String(value) : null;
-
-      if (paramKey !== "page" && newValue !== prevValue) {
-        filtersChanged = true;
-      }
-
-      if (newValue !== null) {
-        params.set(paramKey, newValue);
-      } else {
-        params.delete(paramKey);
-      }
-    });
-
-    if (filtersChanged) {
-      params.set("page", "1");
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current); // очищає попередній таймер
     }
 
-    // Якщо URL вже такий самий, не пушити повторно
-    const newUrl = `?${params.toString()}`;
-    if (`?${searchParams.toString()}` !== newUrl) {
-      router.push(newUrl);
-    }
-  }, [router, searchParams, watchedValues]);
+    debounceTimeout.current = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
+      let filtersChanged = false;
+
+      (Object.entries(watchedValues) as [keyof IFormData, unknown][]).forEach(([key, value]) => {
+        const paramKey = String(key);
+        const prevValue = searchParams.get(paramKey);
+        const newValue = value !== undefined && value !== null && value !== "" ? String(value) : null;
+
+        if (paramKey !== "page" && newValue !== prevValue) {
+          filtersChanged = true;
+        }
+
+        if (newValue !== null) {
+          params.set(paramKey, newValue);
+        } else {
+          params.delete(paramKey);
+        }
+      });
+
+      if (filtersChanged) {
+        params.set("page", "1");
+      }
+
+      const newUrl = `?${params.toString()}`;
+      if (`?${searchParams.toString()}` !== newUrl) {
+        router.push(newUrl);
+      }
+    }, 500); // 500ms затримка
+  }, [watchedValues, router, searchParams]);
 
   const downloadExcel = async () => {
     await exelService.getAll({

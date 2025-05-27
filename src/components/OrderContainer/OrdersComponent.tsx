@@ -106,9 +106,9 @@ export default function OrdersComponent() {
       <div className="flex gap-2 bg-green-800 text-white">
         <div
           className="flex flex-row items-center justify-center cursor-pointer transition-transform hover:scale-105 active:scale-85 w-1/12"
-          onClick={() => handleSortClick("_id")}
+          onClick={() => handleSortClick("id")}
         >
-          Id{getSortIcon("_id")}
+          Id{getSortIcon("id")}
         </div>
         <div
           className="flex flex-row items-center justify-center cursor-pointer transition-transform hover:scale-105 active:scale-85 w-1/12"

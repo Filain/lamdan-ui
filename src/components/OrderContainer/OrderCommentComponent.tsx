@@ -51,7 +51,7 @@ export default function OrderCommentComponent({ order }: ICommentProps) {
     if (order.manager?._id === user?._id || order.manager === null) {
       setModal("edit");
     } else {
-      alert("This order belongs to another user you can't add comment.");
+      alert("This order belongs to another user you can't edit.");
     }
   };
 

@@ -16,6 +16,7 @@ export default function OrderComponent({ order, isDark, details, setDetails }: I
   // const [details, setDetails] = useState<string | null>(null);
   const {
     _id,
+    id,
     name,
     surname,
     email,
@@ -50,8 +51,8 @@ export default function OrderComponent({ order, isDark, details, setDetails }: I
         className={` flex flex-row  gap-2 cursor-pointer ${details === _id ? "bg-green-800" : isDark ? "bg-gray-400" : "bg-white"}`}
         onClick={() => handleDetail(_id)}
       >
-        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap " title={_id ?? ""}>
-          {_id}
+        <p className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap " title={id?.toString() ?? ""}>
+          {id}
         </p>
         <p
           className="w-1/12 truncate overflow-hidden text-ellipsis whitespace-nowrap text-transform: capitalize"

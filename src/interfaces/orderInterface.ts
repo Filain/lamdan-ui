@@ -41,6 +41,7 @@ export interface IOrder {
   group: IGroup | null;
   comment: string[];
   _id: string;
+  id: number;
   name: string;
   surname: string;
   email: string;
