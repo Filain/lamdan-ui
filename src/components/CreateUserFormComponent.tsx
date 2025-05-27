@@ -1,6 +1,7 @@
 "use client";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/ui/Button";
@@ -29,6 +30,15 @@ export default function CreateUserFormComponent() {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       setModal(null);
       reset();
+    },
+    onError: (error: unknown) => {
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response?.status === 422) {
+        alert("User already exists");
+      } else {
+        alert("Something went wrong");
+      }
     },
   });
 
