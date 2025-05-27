@@ -137,7 +137,15 @@ export default function FilterComponent() {
         </div>
       </div>
       <InputCheckBox label="My" {...register("my")} />
-      <Button type="submit" onClick={() => reset()} className="w-10 h-10" icon={true}>
+      <Button
+        type="submit"
+        onClick={() => {
+          reset();
+          router.push("?page=1");
+        }}
+        className="w-10 h-10"
+        icon={true}
+      >
         <Icons name="refresh" className="w-8 h-8 fill-transparent stroke-white   stroke-1" />
       </Button>
       <Button type="button" onClick={() => downloadExcel()} className="w-10 h-10" icon={true}>
